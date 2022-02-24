@@ -15,6 +15,6 @@ namespace NetStackBeautifier.Services
         /// <summary>
         /// Executes the beautify on a whole stack.
         /// </summary>
-        IAsyncEnumerable<FrameItem> BeautifyAsync(string input, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<IFrameLine> BeautifyAsync(string input, CancellationToken cancellationToken = default);
     }
 }

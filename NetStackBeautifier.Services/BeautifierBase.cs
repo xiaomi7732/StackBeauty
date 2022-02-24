@@ -16,22 +16,43 @@ namespace NetStackBeautifier.Services
             _lineBeautifiers = lineBeautifiers ?? throw new ArgumentNullException(nameof(lineBeautifiers));
         }
 
-        public async IAsyncEnumerable<FrameItem> BeautifyAsync(
+        public async IAsyncEnumerable<IFrameLine> BeautifyAsync(
             string input,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            IFrameLine? firstNode = null;
             foreach (string line in _lineBreaker.BreakIntoLines(input))
             {
-                FrameItem newItem = CreateFrameItem(line);
-                foreach (ILineBeautifier<T> lineBeautifier in _lineBeautifiers)
+                // TODO: Revisit the logic to form hierarchy.
+                IFrameLine newItem = CreateFrameItem(line);
+                if (firstNode is null)
                 {
-                    newItem = await lineBeautifier.BeautifyAsync(newItem, cancellationToken);
+                    firstNode = newItem;
                 }
-                yield return newItem;
+                else
+                {
+                    firstNode.Children.Add(newItem.Id);
+                }
+
+                yield return newItem switch
+                {
+                    (FrameRawText rawText) => rawText,
+                    (FrameItem frameItem) => await BeautifyAsync(frameItem, cancellationToken),
+                    _ => throw new InvalidOperationException("Unsupported frame item type."),
+                };
             }
         }
 
-        protected abstract FrameItem CreateFrameItem(string line);
+        private async Task<FrameItem> BeautifyAsync(FrameItem input, CancellationToken cancellationToken)
+        {
+            foreach (ILineBeautifier<T> lineBeautifier in _lineBeautifiers)
+            {
+                input = await lineBeautifier.BeautifyAsync(input, cancellationToken);
+            }
+            return input;
+        }
+
+        protected abstract IFrameLine CreateFrameItem(string line);
 
         public abstract bool CanBeautify(string input);
     }

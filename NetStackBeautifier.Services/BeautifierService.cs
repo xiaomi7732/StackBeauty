@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
-using NetStackBeautifier.Core;
 
 namespace NetStackBeautifier.Services;
-internal abstract class BeautifierService
+
+internal class BeautifierService : IBeautifierService
 {
     private readonly IEnumerable<IBeautifier> _beautifiers;
     private readonly ILogger<BeautifierService> _logger;
@@ -16,7 +16,7 @@ internal abstract class BeautifierService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async IAsyncEnumerable<FrameItem> BeautifyAsync(string input, [EnumeratorCancellation] CancellationToken cancellationToken)
+    public async IAsyncEnumerable<IFrameLine> BeautifyAsync(string input, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         _logger.LogInformation("Picking target beautifier");
         foreach (IBeautifier beautifier in _beautifiers)
@@ -24,7 +24,7 @@ internal abstract class BeautifierService
             if (beautifier.CanBeautify(input))
             {
                 _logger.LogInformation("First matched beautifier: {beautifierName}", beautifier.GetType().Name);
-                await foreach (FrameItem item in beautifier.BeautifyAsync(input, cancellationToken))
+                await foreach (IFrameLine item in beautifier.BeautifyAsync(input, cancellationToken))
                 {
                     yield return item;
                 }

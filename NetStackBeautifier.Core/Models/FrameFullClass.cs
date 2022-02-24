@@ -4,7 +4,8 @@ namespace NetStackBeautifier.Core;
 /// </summary>
 public record FrameFullClass
 {
-    public IEnumerable<string>? NameSections { get; init; }
+    public IEnumerable<string> NameSections { get; init; } = Enumerable.Empty<string>();
+    public IEnumerable<string> GenericParameterTypes { get; init; } = Enumerable.Empty<string>();
 
     /// <summary>
     /// Gets the full class name.

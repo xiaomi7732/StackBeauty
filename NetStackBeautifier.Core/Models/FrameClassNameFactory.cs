@@ -3,12 +3,12 @@ namespace NetStackBeautifier.Core;
 /// <summary>
 /// A factory to create frame namespace object.
 /// </summary>
-public sealed class FrameNamespaceFactory
+public sealed class FrameClassNameFactory
 {
-    private FrameNamespaceFactory()
+    private FrameClassNameFactory()
     {
     }
-    public static FrameNamespaceFactory Instance { get; } = new FrameNamespaceFactory();
+    public static FrameClassNameFactory Instance { get; } = new FrameClassNameFactory();
 
     /// <summary>
     /// A factory method to create namespace from string.
@@ -21,6 +21,22 @@ public sealed class FrameNamespaceFactory
         return new FrameFullClass()
         {
             NameSections = namespaceTokens,
+        };
+    }
+
+    /// <summary>
+    /// A factory method to create namespace from string, and a list of generic types
+    /// </summary>
+    /// <param name="namespaceString"></param>
+    /// <returns></returns>
+    public FrameFullClass FromString(string namespaceString, params string[] genericTypes)
+    {
+        string[] namespaceTokens = namespaceString.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+        return new FrameFullClass()
+        {
+            NameSections = namespaceTokens,
+            GenericParameterTypes = genericTypes,
         };
     }
 }

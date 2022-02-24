@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetStackBeautifier.Core\NetStackBeautifier.Core.csproj" />
+    <ProjectReference Include="..\NetStackBeautifier.Services\NetStackBeautifier.Services.csproj" />
   </ItemGroup>
 
 </Project>
