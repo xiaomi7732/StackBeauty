@@ -14,6 +14,17 @@ There are various formats for call stack the user could get. And that shouldn't 
 ## Architecture
 
 ```mermaid
+graph LR
+    A[Input] -->|Parsers| B(IFrameLine collection)
+    B -->|Beautifiers| C{Beautified IFrameLine collection}
+    C -->|Html Render| D[Html]
+    C -->|Text Render| E[Text]
+    C -->|... Render| F[...]
+```
+
+Generally, once input, callstack will be parsed by parsers; then beautifiers steps in to beautify various parts and output it as json; renders will pick up the json and output it to various results - html; svg; ...
+
+```mermaid
 graph TD
     A[Stack Blob] -->|Match| B{Find out beautifier}
     B --> |exception| C[Exception trace beautify]
