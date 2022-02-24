@@ -36,16 +36,16 @@ public class HtmlRender : IRender<string>
     }
 
     .frame-class-name {
-        color: #45ADA8;
+        color: #2271B1;
     }
 
     .frame-method-name {
         font-weight: bold;
-        color: #547980;
+        color: #996800;
     }
 
     .frame-parameter-list {
-        color: #594F4F;
+        color: #362400;
     }
 
     .frame-file-path {
@@ -53,7 +53,12 @@ public class HtmlRender : IRender<string>
     }
 
     .frame-file-line {
-        color: #763626;
+        color: #D63638;
+    }
+
+    .frame-parameter-type {
+        color: #043959 ;
+        font-weight: bold;
     }
 </style>");
             }
@@ -96,13 +101,18 @@ public class HtmlRender : IRender<string>
 
     private string RenderLine(FrameItem frameItem)
     {
+        if(frameItem.FullClass is null)
+        {
+            throw new ArgumentException("Full className is required.");
+        }
+
         if (frameItem.Method is null)
         {
             throw new ArgumentException("FrameItem.Method is required.");
         }
 
-        return $@"<div>
-<span class='frame-class-name'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault)}</span>.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}
+        return $@"<div alt='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)}'>
+<span class='frame-class-name'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}
 {Render(frameItem.FileInfo)}
 </div>";
     }
@@ -117,7 +127,7 @@ public class HtmlRender : IRender<string>
         string parameterList = string.Empty;
         foreach (FrameParameter p in parameters)
         {
-            parameterList += $"<span>{HttpUtility.HtmlEncode(p.ParameterType)}</span>&nbsp;<span>{HttpUtility.HtmlEncode(p.ParameterName)}</span>,&nbsp;";
+            parameterList += $"<span class='frame-parameter-type'>{HttpUtility.HtmlEncode(p.ParameterType)}</span>&nbsp;<span>{HttpUtility.HtmlEncode(p.ParameterName)}</span>,&nbsp;";
         }
 
         return $"<span class='frame-parameter-list'>({parameterList.Substring(0, parameterList.Length - 7)})</span>";
