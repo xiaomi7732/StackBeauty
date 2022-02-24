@@ -16,7 +16,7 @@ namespace NetStackBeautifier.Services.LineBeautifiers
         public Task<FrameItem> BeautifyAsync(FrameItem line, CancellationToken cancellationToken = default)
         {
             string? methodContent = line.Method?.Name;
-            
+
             // Short hand, no mehtod to deal with.
             if (string.IsNullOrEmpty(methodContent))
             {
@@ -31,7 +31,7 @@ namespace NetStackBeautifier.Services.LineBeautifiers
                 {
                     Method = line.Method! with
                     {
-                        Name = $"{match.Groups[1].Value}<{match.Groups[2].Value}>",
+                        Name = $"{match.Groups[1].Value}<{match.Groups[2].Value.Replace(",", ", ").Replace("  ", " ")}>",
                     },
                 };
             }

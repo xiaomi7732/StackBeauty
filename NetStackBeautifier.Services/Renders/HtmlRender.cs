@@ -29,10 +29,13 @@ public class HtmlRender : IRender<string>
                 htmlBuilder.AppendFormat("<title>{0}</title>", ".NET Trace Beautifier");
                 htmlBuilder.AppendLine();
                 htmlBuilder.AppendLine(@"<style>
-    body {font-family: Verdana,sans-serif}
+    body {
+        font-family: Verdana,sans-serif;
+        font-size: 14px;
+        line-height: 1.5em;
+    }
 
     .description-text {
-        font-weight: bold;
     }
 
     .frame-class-name {
@@ -111,8 +114,8 @@ public class HtmlRender : IRender<string>
             throw new ArgumentException("FrameItem.Method is required.");
         }
 
-        return $@"<div alt='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)}'>
-<span class='frame-class-name'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}
+        return $@"<div>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)}'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
 {Render(frameItem.FileInfo)}
 </div>";
     }
@@ -140,6 +143,6 @@ public class HtmlRender : IRender<string>
             return string.Empty;
         }
 
-        return $"<span class='frame-file-path'>&nbsp;&nbsp;&nbsp;&nbsp;{HttpUtility.HtmlEncode(fileInfo.FilePath)}</span>&nbsp;Line: <span class='frame-file-line'>{HttpUtility.HtmlEncode(fileInfo.LineNumber)}</span>";
+        return $"<span class='frame-file-path'>&nbsp;&nbsp;&nbsp;&nbsp;{HttpUtility.HtmlEncode(fileInfo.FilePath)}</span>#<span class='frame-file-line'>{HttpUtility.HtmlEncode(fileInfo.LineNumber)}</span>";
     }
 }
