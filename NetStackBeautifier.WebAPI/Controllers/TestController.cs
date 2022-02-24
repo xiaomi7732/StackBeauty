@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using NetStackBeautifier.Services;
 
@@ -25,9 +24,7 @@ namespace NetStackBeautifier.WebAPI.Controllers
             await foreach(IFrameLine line in _beautifierService.BeautifyAsync(input, cancellationToken))
             {
                 yield return line;
-                // yield return JsonSerializer.Serialize<object>(line);
             }
-            //return _beautifierService.BeautifyAsync(input, cancellationToken);
         }
     }
 }
