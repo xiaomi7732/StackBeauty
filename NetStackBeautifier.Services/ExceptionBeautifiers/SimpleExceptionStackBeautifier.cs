@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using NetStackBeautifier.Core;
 
-namespace NetStackBeautifier.Services
+namespace NetStackBeautifier.Services.ExceptionBeautifiers
 {
     /// <summary>
     /// This is an exception stack beautifier that handles exception trace without inner exception.
