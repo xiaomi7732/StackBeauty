@@ -1,4 +1,4 @@
-namespace NetStackBeautifier;
+namespace NetStackBeautifier.Core;
 public record FrameRawText : IFrameLine
 {
     public string Value { get; init; } = string.Empty;

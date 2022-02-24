@@ -17,7 +17,7 @@ public sealed class FrameClassNameFactory
     /// <returns></returns>
     public FrameFullClass FromString(string namespaceString)
     {
-        string[] namespaceTokens = namespaceString.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        string[] namespaceTokens = namespaceString.Split('.', StringSplitOptions.RemoveEmptyEntries);
         return new FrameFullClass()
         {
             NameSections = namespaceTokens,
@@ -31,7 +31,7 @@ public sealed class FrameClassNameFactory
     /// <returns></returns>
     public FrameFullClass FromString(string namespaceString, params string[] genericTypes)
     {
-        string[] namespaceTokens = namespaceString.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        string[] namespaceTokens = namespaceString.Split('.', StringSplitOptions.RemoveEmptyEntries);
 
         return new FrameFullClass()
         {

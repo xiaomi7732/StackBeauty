@@ -16,16 +16,12 @@ public class BeautifiedController : ControllerBase
     }
 
     [HttpPost]
-    public async IAsyncEnumerable<object> Post([FromBody] string body, [EnumeratorCancellation] CancellationToken cancellationToken)
+    public IAsyncEnumerable<IFrameLine> Post([FromBody] string body, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(body))
         {
             throw new ArgumentNullException(nameof(body));
         }
-
-        await foreach (IFrameLine line in _beautifierService.BeautifyAsync(body, cancellationToken))
-        {
-            yield return line;
-        }
+        return _beautifierService.BeautifyAsync(body, cancellationToken);
     }
 }

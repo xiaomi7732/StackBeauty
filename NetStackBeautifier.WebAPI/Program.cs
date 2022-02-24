@@ -1,4 +1,7 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using NetStackBeautifier.Core;
 using NetStackBeautifier.Services;
+using NetStackBeautifier.Services.Renders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +13,14 @@ builder.Services.AddControllers(options =>
 }).AddJsonOptions(option =>
 {
     option.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
+    option.JsonSerializerOptions.Converters.Add(new FrameLineJsonConverter());
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterExceptionBeautifier();
+builder.Services.TryAddScoped<HtmlRender>();
 
 #if DEBUG
 foreach (ServiceDescriptor descriptor in builder.Services)
