@@ -1,6 +1,6 @@
 using System.Linq;
 using NetStackBeautifier.Core;
-using NetStackBeautifier.Services.ExceptionBeautifiers;
+using NetStackBeautifier.Services.StackBeautifiers;
 using Xunit;
 
 namespace NetStackBeautifier.Services.Tests;

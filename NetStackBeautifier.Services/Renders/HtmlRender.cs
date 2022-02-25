@@ -104,7 +104,7 @@ public class HtmlRender : IRender<string>
 
     private string RenderLine(FrameItem frameItem)
     {
-        if(frameItem.FullClass is null)
+        if (frameItem.FullClass is null)
         {
             throw new ArgumentException("Full className is required.");
         }
@@ -115,9 +115,26 @@ public class HtmlRender : IRender<string>
         }
 
         return $@"<div>
-<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)}'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)}'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>{RenderClassGenericTypes(frameItem.FullClass.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
 {Render(frameItem.FileInfo)}
 </div>";
+    }
+
+    private string RenderClassGenericTypes(IEnumerable<string> genericParameterTypes)
+    {
+        if (!genericParameterTypes.NullAsEmpty().Any())
+        {
+            return string.Empty;
+        }
+
+        string line = string.Empty;
+        foreach (string typeName in genericParameterTypes)
+        {
+            line += $"{typeName}, ";
+        }
+        line = HttpUtility.HtmlEncode("<" + line.Substring(0, line.Length - ", ".Length) + ">");
+
+        return $"<span class='frame-class-generic-parameter-list'>{line}</span>";
     }
 
     private string RenderParameterList(IReadOnlyCollection<FrameParameter> parameters)

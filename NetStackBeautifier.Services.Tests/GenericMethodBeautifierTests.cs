@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NetStackBeautifier.Core;
-using NetStackBeautifier.Services.ExceptionBeautifiers;
 using NetStackBeautifier.Services.LineBeautifiers;
+using NetStackBeautifier.Services.StackBeautifiers;
 using Xunit;
 
 namespace NetStackBeautifier.Services.Tests;
@@ -9,7 +9,7 @@ namespace NetStackBeautifier.Services.Tests;
 public class GenericMethodBeautifierTests
 {
     [Theory]
-    [InlineData(@"TestGenerics[T,T2]", @"TestGenerics<T,T2>")]
+    [InlineData(@"TestGenerics[T,T2]", @"TestGenerics<T, T2>")]
     public async Task TestPositiveBeautify(string input, string expected)
     {
         GenericMethodBeautifier<SimpleExceptionStackBeautifier> target = new GenericMethodBeautifier<SimpleExceptionStackBeautifier>();
