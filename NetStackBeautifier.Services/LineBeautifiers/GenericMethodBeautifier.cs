@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 using NetStackBeautifier.Core;
 
 namespace NetStackBeautifier.Services.LineBeautifiers
@@ -7,13 +8,19 @@ namespace NetStackBeautifier.Services.LineBeautifiers
     /// Beautify generic method.
     /// For example, from: TestGenerics[T,T2] => TestGenerics<T,T2>
     /// </summary>
-    internal class GenericMethodBeautifier<T> : ILineBeautifier<T>
+    internal class GenericMethodBeautifier<T> : LineBeautifierBase<T>
         where T : BeautifierBase<T>
     {
         private const string GenericMatcherExpression = @"(.*)\[(.*)\]";
         private static readonly Regex matcher = new Regex(GenericMatcherExpression, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
-        public Task<FrameItem> BeautifyAsync(FrameItem line, CancellationToken cancellationToken = default)
+        public GenericMethodBeautifier(
+            ILogger<GenericMethodBeautifier<T>> logger)
+            : base(logger)
+        {
+        }
+
+        protected override Task<FrameItem> BeautifyImpAsync(FrameItem line, CancellationToken cancellationToken = default)
         {
             string? methodContent = line.Method?.Name;
 

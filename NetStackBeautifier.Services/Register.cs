@@ -15,7 +15,11 @@ namespace NetStackBeautifier.Services
             services.AddScoped<IBeautifier, SimpleExceptionStackBeautifier>();
             services.AddScoped<IBeautifier, AzureProfilerStackBeautifier>();
 
+            services.AddScoped(typeof(ILineBeautifier<>), typeof(MethodNameNewLineRemover<>));
+            services.AddScoped<ILineBeautifier<AzureProfilerStackBeautifier>, ClassNameTickNumberRemover<AzureProfilerStackBeautifier>>();
             services.AddScoped(typeof(ILineBeautifier<>), typeof(GenericMethodBeautifier<>));
+            services.AddScoped(typeof(ILineBeautifier<>), typeof(ClassGenericTypeSystemCanonicalBeautifier<>));
+            services.AddScoped<ILineBeautifier<AzureProfilerStackBeautifier>, AzureProfilerMethodEndingBeautifier<AzureProfilerStackBeautifier>>();
             services.AddScoped<IBeautifier, DumbBeautifier>();
             services.TryAddScoped<IBeautifierService, BeautifierService>();
 

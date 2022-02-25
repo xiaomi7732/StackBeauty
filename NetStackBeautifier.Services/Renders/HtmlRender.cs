@@ -39,12 +39,12 @@ public class HtmlRender : IRender<string>
     }
 
     .frame-class-name {
-        color: #2271B1;
+        color: #996800;
     }
 
     .frame-method-name {
         font-weight: bold;
-        color: #996800;
+        color: #2271B1;
     }
 
     .frame-parameter-list {

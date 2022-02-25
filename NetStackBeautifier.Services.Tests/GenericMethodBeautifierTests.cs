@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NetStackBeautifier.Core;
 using NetStackBeautifier.Services.LineBeautifiers;
 using NetStackBeautifier.Services.StackBeautifiers;
@@ -12,10 +14,13 @@ public class GenericMethodBeautifierTests
     [InlineData(@"TestGenerics[T,T2]", @"TestGenerics<T, T2>")]
     public async Task TestPositiveBeautify(string input, string expected)
     {
-        GenericMethodBeautifier<SimpleExceptionStackBeautifier> target = new GenericMethodBeautifier<SimpleExceptionStackBeautifier>();
+        Mock<ILogger<GenericMethodBeautifier<SimpleExceptionStackBeautifier>>> loggerMock = new();
+        GenericMethodBeautifier<SimpleExceptionStackBeautifier> target = new GenericMethodBeautifier<SimpleExceptionStackBeautifier>(loggerMock.Object);
 
-        FrameItem frameItem = new FrameItem(){
-            Method = new FrameMethod(){
+        FrameItem frameItem = new FrameItem()
+        {
+            Method = new FrameMethod()
+            {
                 Name = input,
             }
         };

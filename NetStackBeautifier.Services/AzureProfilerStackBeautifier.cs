@@ -6,7 +6,7 @@ namespace NetStackBeautifier.Services.StackBeautifiers;
 /// <summary>
 /// This beautifier handles Azure Profiler Trace stack
 /// </summary>
-internal class AzureProfilerStackBeautifier : BeautifierBase<SimpleExceptionStackBeautifier>
+internal class AzureProfilerStackBeautifier : BeautifierBase<AzureProfilerStackBeautifier>
 {
     // Missing symbol frame example: mscorlib.ni.dll!6270759 [mscorlib.ni.pdb/fa1a429d998490881c873b0a3d3cc3bf1]
     // Group[1]: Assembly name: mscorlib.ni.dll
@@ -19,7 +19,7 @@ internal class AzureProfilerStackBeautifier : BeautifierBase<SimpleExceptionStac
 
     public AzureProfilerStackBeautifier(
         LineBreaker lineBreaker,
-        IEnumerable<ILineBeautifier<SimpleExceptionStackBeautifier>> lineBeautifiers,
+        IEnumerable<ILineBeautifier<AzureProfilerStackBeautifier>> lineBeautifiers,
         FrameClassNameFactory frameClassNameFactory
         ) : base(lineBreaker, lineBeautifiers)
     {

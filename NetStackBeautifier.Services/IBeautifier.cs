@@ -1,5 +1,3 @@
-using NetStackBeautifier.Core;
-
 namespace NetStackBeautifier.Services
 {
     /// <summary>
