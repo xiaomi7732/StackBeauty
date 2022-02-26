@@ -1,4 +1,3 @@
-
 const parserPath = "/Beautified";
 const divRenderPath = "/HtmlContent";
 
@@ -8,6 +7,10 @@ const simpleCheckBox = document.getElementById('cbxRenderMode');
 const darkThemeButton = document.getElementById('themeDark');
 const lightThemeButton = document.getElementById('themeLight');
 const styleDiv = document.getElementById('themeStyleSheet');
+const onThemeChanged = (ev) => {
+    const themeFileName = ev.target.value + ".css";
+    styleDiv.href = themeFileName;
+}
 
 btnBeautify.addEventListener("click", beautifyButtonClicked);
 darkThemeButton.addEventListener("click", onThemeChanged);
@@ -34,7 +37,8 @@ async function getBeautifiedAsync(data) {
 
 async function getDivContent(data) {
     const response = await fetch(divRenderPath + '?' + new URLSearchParams({
-        "RenderMode": simpleCheckBox.checked ? "Simple" : "Full"
+        "RenderMode": simpleCheckBox.checked ? "Simple" : "Full",
+        "t": darkThemeButton.checked ? darkThemeButton.value : lightThemeButton.value,
     }), {
         method: 'POST',
         headers: {
@@ -43,9 +47,4 @@ async function getDivContent(data) {
         body: JSON.stringify(data),
     });
     return response.text();
-}
-
-function onThemeChanged(ev) {
-    const themeFileName = ev.target.value + ".css";
-    styleDiv.href = themeFileName;
 }
