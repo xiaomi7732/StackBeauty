@@ -5,6 +5,7 @@ const divRenderPath = "HtmlContent";
 
 const btnBeautify = document.getElementById('btnBeautify');
 const resultDiv = document.getElementById('result');
+const simpleCheckBox = document.getElementById('cbxRenderMode');
 
 btnBeautify.addEventListener("click", BeautifyButtonClicked);
 
@@ -28,7 +29,9 @@ async function GetBeautifiedAsync(data) {
 }
 
 async function GetDivContent(data) {
-    const response = await fetch(endpoint + divRenderPath, {
+    const response = await fetch(endpoint + divRenderPath + '?' + new URLSearchParams({
+        "RenderMode": simpleCheckBox.checked ? "Simple" : "Full"
+    }), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
