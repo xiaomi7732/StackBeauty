@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using NetStackBeautifier.Core;
+using NetStackBeautifier.Services.Filters;
 
 namespace NetStackBeautifier.Services.StackBeautifiers;
 /// <summary>
@@ -45,8 +46,9 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     public SimpleExceptionStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<SimpleExceptionStackBeautifier>> lineBeautifiers,
+        IEnumerable<IFrameFilter<SimpleExceptionStackBeautifier>> filters,
         FrameClassNameFactory frameClassNameFactory)
-            : base(lineBreaker, lineBeautifiers)
+            : base(lineBreaker, lineBeautifiers, filters)
     {
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));
     }

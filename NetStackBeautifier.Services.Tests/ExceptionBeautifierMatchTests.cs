@@ -1,5 +1,6 @@
 using System.Linq;
 using NetStackBeautifier.Core;
+using NetStackBeautifier.Services.Filters;
 using NetStackBeautifier.Services.StackBeautifiers;
 using Xunit;
 
@@ -16,6 +17,7 @@ public class UnitTest1
         SimpleExceptionStackBeautifier target = new SimpleExceptionStackBeautifier(
             new LineBreaker(), 
             Enumerable.Empty<ILineBeautifier<SimpleExceptionStackBeautifier>>(),
+            Enumerable.Empty<IFrameFilter<SimpleExceptionStackBeautifier>>(),
             FrameClassNameFactory.Instance);
 
         bool actual = target.CanBeautify(input);

@@ -16,12 +16,17 @@ public class HtmlController
     }
 
     [HttpPost]
-    public async Task<ContentResult> Render([FromBody] IReadOnlyCollection<IFrameLine> frames, CancellationToken cancellationToken)
+    public async Task<ContentResult> Render([FromBody] IReadOnlyCollection<IFrameLine> frames, [FromQuery] RenderMode renderMode = RenderMode.Simple, CancellationToken cancellationToken = default)
     {
-        return new ContentResult(){
+        RenderOptions renderOptions = new RenderOptions
+        {
+            Mode = renderMode,
+        };
+        return new ContentResult()
+        {
             ContentType = "text/html",
-            StatusCode = (int) HttpStatusCode.OK,
-            Content = await _render.RenderAsync(frames, cancellationToken).ConfigureAwait(false),
+            StatusCode = (int)HttpStatusCode.OK,
+            Content = await _render.RenderAsync(frames, renderOptions, cancellationToken).ConfigureAwait(false),
         };
     }
 }

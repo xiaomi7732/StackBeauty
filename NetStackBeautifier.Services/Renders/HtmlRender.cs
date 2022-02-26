@@ -16,7 +16,9 @@ public class HtmlRender : IRender<string>
     /// Renders iframe lines into a html.
     /// </summary>
     public async Task<string> RenderAsync(
-        IReadOnlyCollection<IFrameLine> data, CancellationToken cancellationToken)
+        IReadOnlyCollection<IFrameLine> data,
+        RenderOptions renderOptions,
+        CancellationToken cancellationToken)
     {
         if (data.Count == 0)
         {
@@ -79,7 +81,7 @@ public class HtmlRender : IRender<string>
             htmlBuilder.AppendLine("<body>");
             try
             {
-                htmlBuilder.Append(await _mainDivRender.RenderAsync(data, cancellationToken).ConfigureAwait(false));
+                htmlBuilder.Append(await _mainDivRender.RenderAsync(data, renderOptions, cancellationToken).ConfigureAwait(false));
             }
             finally
             {

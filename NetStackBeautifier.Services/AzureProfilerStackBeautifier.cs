@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using NetStackBeautifier.Core;
+using NetStackBeautifier.Services.Filters;
 
 namespace NetStackBeautifier.Services.StackBeautifiers;
 
@@ -20,8 +21,9 @@ internal class AzureProfilerStackBeautifier : BeautifierBase<AzureProfilerStackB
     public AzureProfilerStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AzureProfilerStackBeautifier>> lineBeautifiers,
+        IEnumerable<IFrameFilter<AzureProfilerStackBeautifier>> filters,
         FrameClassNameFactory frameClassNameFactory
-        ) : base(lineBreaker, lineBeautifiers)
+        ) : base(lineBreaker, lineBeautifiers, filters)
     {
         _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));

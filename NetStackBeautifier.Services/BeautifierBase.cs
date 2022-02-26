@@ -1,19 +1,24 @@
 using System.Runtime.CompilerServices;
 using NetStackBeautifier.Core;
+using NetStackBeautifier.Services.Filters;
 
 namespace NetStackBeautifier.Services
 {
     internal abstract class BeautifierBase<T> : IBeautifier
+        where T: IBeautifier
     {
         private readonly LineBreaker _lineBreaker;
         private readonly IEnumerable<ILineBeautifier<T>> _lineBeautifiers;
+        private readonly IEnumerable<IFrameFilter<T>> _filters;
 
         public BeautifierBase(
             LineBreaker lineBreaker,
-            IEnumerable<ILineBeautifier<T>> lineBeautifiers)
+            IEnumerable<ILineBeautifier<T>> lineBeautifiers,
+            IEnumerable<IFrameFilter<T>> filters)
         {
             _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
             _lineBeautifiers = lineBeautifiers ?? throw new ArgumentNullException(nameof(lineBeautifiers));
+            _filters = filters ?? throw new ArgumentNullException(nameof(filters));
         }
 
         public async IAsyncEnumerable<IFrameLine> BeautifyAsync(
@@ -38,6 +43,10 @@ namespace NetStackBeautifier.Services
             foreach (ILineBeautifier<T> lineBeautifier in _lineBeautifiers)
             {
                 input = await lineBeautifier.BeautifyAsync(input, cancellationToken);
+            }
+            foreach(IFrameFilter<T> filter in _filters)
+            {
+                filter.Filter(input);
             }
             return input;
         }

@@ -6,7 +6,10 @@ namespace NetStackBeautifier.Services.Renders;
 
 public class HtmlSectionRender : IRender<string>
 {
-    public Task<string> RenderAsync(IReadOnlyCollection<IFrameLine> data, CancellationToken cancellationToken)
+    public Task<string> RenderAsync(
+        IReadOnlyCollection<IFrameLine> data,
+        RenderOptions renderOptions,
+        CancellationToken cancellationToken)
     {
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.AppendLine("<div>");
@@ -17,9 +20,14 @@ public class HtmlSectionRender : IRender<string>
                 string lineToAdd = line switch
                 {
                     FrameRawText rawText => RenderLine(rawText),
-                    FrameItem item => RenderLine(item),
+                    FrameItem item => RenderLine(item, renderOptions),
                     _ => throw new NotSupportedException(),
                 };
+                // Nothing to append when nothing returned.
+                if(string.IsNullOrEmpty(lineToAdd))
+                {
+                    continue;
+                }
                 htmlBuilder.AppendLine(lineToAdd);
             }
         }
@@ -36,8 +44,14 @@ public class HtmlSectionRender : IRender<string>
         return $"<div class='description-text'>{HttpUtility.HtmlEncode(rawText.Value)}</div>";
     }
 
-    private string RenderLine(FrameItem frameItem)
+    private string RenderLine(FrameItem frameItem, RenderOptions renderOptions)
     {
+        // When this line is recognized as noise and the render mode is simple, skip this line by returning string.Empty;
+        if(frameItem.Tags.Contains(new KeyValuePair<string, string>("Noise", "true")) && renderOptions.Mode == RenderMode.Simple)
+        {
+            return string.Empty;
+        }
+
         if (frameItem.FullClass is null)
         {
             throw new ArgumentException("Full className is required.");
