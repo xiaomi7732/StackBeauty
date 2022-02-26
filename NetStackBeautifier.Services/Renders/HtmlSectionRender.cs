@@ -24,7 +24,7 @@ public class HtmlSectionRender : IRender<string>
                     _ => throw new NotSupportedException(),
                 };
                 // Nothing to append when nothing returned.
-                if(string.IsNullOrEmpty(lineToAdd))
+                if (string.IsNullOrEmpty(lineToAdd))
                 {
                     continue;
                 }
@@ -47,14 +47,9 @@ public class HtmlSectionRender : IRender<string>
     private string RenderLine(FrameItem frameItem, RenderOptions renderOptions)
     {
         // When this line is recognized as noise and the render mode is simple, skip this line by returning string.Empty;
-        if(frameItem.Tags.Contains(new KeyValuePair<string, string>("Noise", "true")) && renderOptions.Mode == RenderMode.Simple)
+        if (frameItem.Tags.Contains(new KeyValuePair<string, string>("Noise", "true")) && renderOptions.Mode == RenderMode.Simple)
         {
             return string.Empty;
-        }
-
-        if (frameItem.FullClass is null)
-        {
-            throw new ArgumentException("Full className is required.");
         }
 
         if (frameItem.Method is null)
@@ -63,12 +58,12 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return $@"<div>
-<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass.FullClassNameOrDefault)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass.ShortClassNameOrDefault)}</span>{RenderClassGenericTypes(frameItem.FullClass.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault ?? frameItem.AssemblySignature)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
 {Render(frameItem.FileInfo)}
 </div>";
     }
 
-    private string RenderClassGenericTypes(IEnumerable<string> genericParameterTypes)
+    private string RenderClassGenericTypes(IEnumerable<string>? genericParameterTypes)
     {
         if (!genericParameterTypes.NullAsEmpty().Any())
         {
@@ -76,7 +71,7 @@ public class HtmlSectionRender : IRender<string>
         }
 
         string line = string.Empty;
-        foreach (string typeName in genericParameterTypes)
+        foreach (string typeName in genericParameterTypes.NullAsEmpty())
         {
             line += $"{typeName}, ";
         }

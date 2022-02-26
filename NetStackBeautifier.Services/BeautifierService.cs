@@ -28,6 +28,7 @@ internal class BeautifierService : IBeautifierService
                 {
                     yield return item;
                 }
+                break;
             }
         }
     }

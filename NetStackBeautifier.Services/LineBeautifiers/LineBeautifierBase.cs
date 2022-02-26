@@ -5,7 +5,7 @@ using NetStackBeautifier.Core;
 namespace NetStackBeautifier.Services.LineBeautifiers
 {
     internal abstract class LineBeautifierBase<T> : ILineBeautifier<T>
-        where T : BeautifierBase<T>
+        where T : IBeautifier
     {
         private readonly ILogger<LineBeautifierBase<T>> _logger;
 

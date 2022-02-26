@@ -13,6 +13,7 @@ namespace NetStackBeautifier.Services
         {
             services.TryAddScoped<LineBreaker>();
             services.TryAddSingleton<FrameClassNameFactory>(p => FrameClassNameFactory.Instance);
+            services.AddScoped<IBeautifier, AIProfilerStackBeautifier>();
             services.AddScoped<IBeautifier, SimpleExceptionStackBeautifier>();
             services.AddScoped<IBeautifier, AzureProfilerStackBeautifier>();
 
@@ -21,6 +22,7 @@ namespace NetStackBeautifier.Services
             services.AddScoped(typeof(ILineBeautifier<>), typeof(GenericMethodBeautifier<>));
             services.AddScoped(typeof(ILineBeautifier<>), typeof(ClassGenericTypeSystemCanonicalBeautifier<>));
             services.AddScoped<ILineBeautifier<AzureProfilerStackBeautifier>, AzureProfilerMethodEndingBeautifier<AzureProfilerStackBeautifier>>();
+            services.AddScoped(typeof(ILineBeautifier<>), typeof(Int32ParameterFiller<>));
             services.AddScoped<IBeautifier, DumbBeautifier>();
             services.TryAddScoped<IBeautifierService, BeautifierService>();
 
