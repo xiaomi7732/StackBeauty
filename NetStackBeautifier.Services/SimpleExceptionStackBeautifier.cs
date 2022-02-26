@@ -28,8 +28,19 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     // [1] ABC.Program, [2]<<Main>$>g__TestGenerics|0_0[T], [3] T target, String s
     // OR
     // Group 1: full class; group 2: method; group 3: Assembly Info
+    // For example: 
     private const string MainPartsRegExpression = @"^\s*at\s+(.*)\.(.*)?\s\((.*)\).*$|^\s*at\s+(.*)\.(.*)?\((.*)\).*$";
     private readonly Regex _mainPartsRegExrepssion = new Regex(MainPartsRegExpression, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
+    // Assembly info with path in it.
+    // For example: ServiceProfiler.Web.Stamp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: C:\a\1\s\src\ServiceProfiler.Web.Stamp\Controllers\HealthCheckApiController.cs:93
+    // Will match: 
+    // Assembly Info: Group[1]: ServiceProfiler.Web.Stamp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+    // Path: C:\a\1\s\src\ServiceProfiler.Web.Stamp\Controllers\HealthCheckApiController.cs
+    // Line: 93
+    // On the other hand, it won't match when there is no path info, like: Azure.Identity, Version=1.4.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8
+    private const string AssemblyInfoWithPathInfo = @"^[\s]*(.*?):[\s]*(.*):[\s]*([\d]+)$";
+    private readonly Regex _assemblyInfoWithPathMatcher = new Regex(AssemblyInfoWithPathInfo, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
     public SimpleExceptionStackBeautifier(
         LineBreaker lineBreaker,
@@ -64,13 +75,15 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
         {
             line = line.Substring(0, line.Length - fileInfoLength - 1).TrimStart();
         }
-        // TODO: Keep processing
+
         Match mainPartsMatch = _mainPartsRegExrepssion.Match(line);
         if (!mainPartsMatch.Success)
         {
             throw new InvalidCastException($"Expected 4 matches for main parts. Original string: {line}, regular expression: {MainPartsRegExpression}");
         }
 
+        (string assemblyInfo, FrameFileInfo? fileInfoInFrameSignature) = ParseAssemblySignature(mainPartsMatch.Groups[3].Value);
+        frameFileInfo ??= fileInfoInFrameSignature;
         FrameItem newFrameItem = new FrameItem()
         {
             FullClass = _frameClassNameFactory.FromString(PickSolidStringFromGroup(mainPartsMatch.Groups[4], mainPartsMatch.Groups[1])),
@@ -80,6 +93,7 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
                 Parameters = ParseParameters(mainPartsMatch.Groups[6].Value),
             },
             FileInfo = frameFileInfo,
+            AssemblySignature = assemblyInfo,
         };
 
         return newFrameItem;
@@ -127,6 +141,23 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
 
         FrameFileInfo result = new FrameFileInfo(filePath, lineNumber);
         return (result, length);
+    }
+
+    private (string, FrameFileInfo? fileInfo) ParseAssemblySignature(string assemblySignature)
+    {
+        if(string.IsNullOrEmpty(assemblySignature))
+        {
+            return (string.Empty, null);
+        }
+
+        Match match = _assemblyInfoWithPathMatcher.Match(assemblySignature);
+        if(match.Success)
+        {
+            return (match.Groups[1].Value, new FrameFileInfo(match.Groups[2].Value, int.Parse(match.Groups[3].Value)));
+        }
+
+        // Otherwise
+        return (assemblySignature, null);
     }
 
     private string PickSolidStringFromGroup(params Group[] groups)
