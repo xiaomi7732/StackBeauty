@@ -14,7 +14,11 @@ public sealed class FrameClassNameFactory
     // Match[2], Group["n"]: Commerce
     // Match[3], Group["n"]: Collections
     // Match[4], Group["ng"]: KeyedCollection`2, Group["g"]: System.__Canon,System.__Canon
-    private const string SectionMatcherExpression = @"[\.]?(?<ng>[\w|`]+)\[(?<g>.*)\]|[\.]?(?<n>\w+)";
+
+    // Other typical cases
+    //    at Microsoft.ServiceProfiler.Internal.Service.Authority.CentralStorageAuthority+<>c__DisplayClass2_1+<<-ctor>b__1>d.MoveNext (Microsoft.ServiceProfiler.Internal.Service, Version=2.6.2107.1202, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a)
+    //    at Microsoft.Extensions.Caching.Memory.CacheExtensions+<GetOrCreateAsync>d__9`1.MoveNext (Microsoft.Extensions.Caching.Abstractions, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60)
+    private const string SectionMatcherExpression = @"[\.]?(?<ng>[^\.\s]+)?\[(?<g>.*)\]|[\.]?(?<n>[^\.\s]+)";
     private static readonly Regex sectionMatcher = new Regex(SectionMatcherExpression, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
     private FrameClassNameFactory()

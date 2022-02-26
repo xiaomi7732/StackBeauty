@@ -23,10 +23,12 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     private const string FileInfoRegExpression = @".+ (in (.*):line (\d*))";
     private readonly Regex _fileInfoRegex = new Regex(FileInfoRegExpression, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
-    // Main parts for a line, group 1: full class; group 2: method; group 3: parameters
+    // Main parts for a line, group 4: full class; group 5: method; group 6: parameters
     // For example, break this: at ABC.Program.<<Main>$>g__TestGenerics|0_0[T](T target, String s) down to:
     // [1] ABC.Program, [2]<<Main>$>g__TestGenerics|0_0[T], [3] T target, String s
-    private const string MainPartsRegExpression = @"^.*at\s*(.*)\.(.*)?\((.*)\).*$";
+    // OR
+    // Group 1: full class; group 2: method; group 3: Assembly Info
+    private const string MainPartsRegExpression = @"^\s*at\s+(.*)\.(.*)?\s\((.*)\).*$|^\s*at\s+(.*)\.(.*)?\((.*)\).*$";
     private readonly Regex _mainPartsRegExrepssion = new Regex(MainPartsRegExpression, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
     public SimpleExceptionStackBeautifier(
@@ -58,21 +60,24 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
         (FrameFileInfo? frameFileInfo, int fileInfoLength) = GetFileInfo(line);
 
         // The the rest;
-        line = line.Substring(0, line.Length - fileInfoLength - 1).TrimStart();
+        if (fileInfoLength > 0)
+        {
+            line = line.Substring(0, line.Length - fileInfoLength - 1).TrimStart();
+        }
         // TODO: Keep processing
         Match mainPartsMatch = _mainPartsRegExrepssion.Match(line);
-        if (!mainPartsMatch.Success || mainPartsMatch.Groups.Count != 4)
+        if (!mainPartsMatch.Success)
         {
             throw new InvalidCastException($"Expected 4 matches for main parts. Original string: {line}, regular expression: {MainPartsRegExpression}");
         }
 
         FrameItem newFrameItem = new FrameItem()
         {
-            FullClass = _frameClassNameFactory.FromString(mainPartsMatch.Groups[1].Value),
+            FullClass = _frameClassNameFactory.FromString(PickSolidStringFromGroup(mainPartsMatch.Groups[4], mainPartsMatch.Groups[1])),
             Method = new FrameMethod()
             {
-                Name = mainPartsMatch.Groups[2].Value,
-                Parameters = ParseParameters(mainPartsMatch.Groups[3].Value),
+                Name = PickSolidStringFromGroup(mainPartsMatch.Groups[2], mainPartsMatch.Groups[5]),
+                Parameters = ParseParameters(mainPartsMatch.Groups[6].Value),
             },
             FileInfo = frameFileInfo,
         };
@@ -86,13 +91,18 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     /// </summary>
     private IEnumerable<FrameParameter> ParseParameters(string input)
     {
+        if (string.IsNullOrEmpty(input))
+        {
+            yield break;
+        }
+
         string[] pairs = input.Split(',', StringSplitOptions.RemoveEmptyEntries);
         foreach (string pair in pairs)
         {
             string[] typeAndNameTokens = pair.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (typeAndNameTokens.Length != 2)
             {
-                throw new InvalidCastException($"Unexpected parameter pair: {pair}");
+                throw new InvalidCastException($"Unexpected parameter pair: {pair}, input string: {input}");
             }
             yield return new FrameParameter(typeAndNameTokens[0], typeAndNameTokens[1]);
         }
@@ -101,7 +111,7 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     private (FrameFileInfo?, int) GetFileInfo(string line)
     {
         Match match = _fileInfoRegex.Match(line);
-        if (match is null)
+        if (match is null || !match.Success)
         {
             return (null, 0);
         }
@@ -117,5 +127,10 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
 
         FrameFileInfo result = new FrameFileInfo(filePath, lineNumber);
         return (result, length);
+    }
+
+    private string PickSolidStringFromGroup(params Group[] groups)
+    {
+        return groups.First(g => !string.IsNullOrEmpty(g.Value)).Value;
     }
 }

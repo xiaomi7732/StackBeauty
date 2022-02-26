@@ -12,7 +12,8 @@ public record FrameFullClass
     /// </summary>
     /// <value></value>
     public string? FullClassNameOrDefault =>
-        NameSections switch {
+        NameSections switch
+        {
             null => null,
             _ => string.Join('.', NameSections)
         };
@@ -21,6 +22,28 @@ public record FrameFullClass
     /// Gets the last section in the namespace
     /// </summary>
     /// <returns></returns>
-    public string? ShortClassNameOrDefault =>
-        NameSections?.LastOrDefault();
+    public string? ShortClassNameOrDefault
+    {
+        get
+        {
+            string? result = NameSections?.LastOrDefault();
+            if (string.IsNullOrEmpty(result))
+            {
+                return null;
+            }
+
+            // Special: d__9, d__?
+            if (result.StartsWith("d__", StringComparison.Ordinal))
+            {
+                string numberPart = result.Substring("d__".Length);
+                int sectionNum = NameSections.NullAsEmpty().Count();
+                if (sectionNum > 1)
+                {
+                    return string.Join('.', NameSections.Skip(sectionNum - 2));
+                }
+            }
+
+            return result;
+        }
+    }
 }

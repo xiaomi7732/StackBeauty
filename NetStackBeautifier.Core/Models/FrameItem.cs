@@ -9,5 +9,7 @@ public record FrameItem : IFrameLine
 
     public Guid Id { get; } = Guid.NewGuid();
 
+    public string? AssemblySignature { get; init; }
+
     public List<Guid> Children { get; } = new List<Guid>();
 }
