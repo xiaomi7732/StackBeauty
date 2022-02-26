@@ -5,6 +5,23 @@ body {
     color: #333;
 }
 
+text-area {
+    font-family: Verdana,sans-serif;
+}
+
+#callstackinput {
+    width: 95%;
+    min-width: 500px;
+    height: 60px;
+}
+
+#result {
+    margin-top: 24px;
+    padding: 12px;
+    border: #043959 1px solid;
+    background-color: #E3E3E3;
+}
+
 .description-text {
     color: #333333;
 }
