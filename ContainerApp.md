@@ -37,11 +37,3 @@ az containerapp create `
   --registry-username $REGISTRY_USERNAME `
   --registry-password "$REGISTRY_PASSWORD"
 ```
-
-Update
-
-```shell
-$CONTAINER_APP_NAME="stackbeauty-dev"
-az containerapp update -n $CONTAINER_APP_NAME -g $RESOURCE_GROUP `
-            --image "$CONTAINER_IMAGE_NAME"
-```
