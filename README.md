@@ -37,3 +37,27 @@ graph TD
     E --> Z
     F --> Z
 ```
+
+## To build the image
+
+Publish the application
+
+```shell
+dotnet publish -c Release -o .\app\ .\NetStackBeautifier.WebAPI\
+```
+
+Build the docker image
+
+```shell
+docker build . -t stackbeauty
+```
+
+To push, tag the image, might want to use a different tag
+
+```shell
+$FullImage='saarsdevhub.azurecr.io/spdevapps/stackbeauty'
+$Version='1.0.0-beta2'
+docker tag stackbeauty:latest "$FullImage`:$Version"
+docker push saarsdevhub.azurecr.io/spdevapps/stackbeauty:$Version
+```
+

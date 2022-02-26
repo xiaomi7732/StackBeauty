@@ -1,7 +1,6 @@
 
-const endpoint = "https://localhost:7079/";
-const parserPath = "Beautified";
-const divRenderPath = "HtmlContent";
+const parserPath = "/Beautified";
+const divRenderPath = "/HtmlContent";
 
 const btnBeautify = document.getElementById('btnBeautify');
 const resultDiv = document.getElementById('result');
@@ -17,7 +16,7 @@ async function BeautifyButtonClicked() {
 }
 
 async function GetBeautifiedAsync(data) {
-    const response = await fetch(endpoint + parserPath, {
+    const response = await fetch(parserPath, {
         method: 'POST',
         headers: {
             'Content-Type': 'text/plain'
@@ -29,7 +28,7 @@ async function GetBeautifiedAsync(data) {
 }
 
 async function GetDivContent(data) {
-    const response = await fetch(endpoint + divRenderPath + '?' + new URLSearchParams({
+    const response = await fetch(divRenderPath + '?' + new URLSearchParams({
         "RenderMode": simpleCheckBox.checked ? "Simple" : "Full"
     }), {
         method: 'POST',
