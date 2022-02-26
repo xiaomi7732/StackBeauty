@@ -20,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterExceptionBeautifier();
+builder.Services.TryAddScoped<HtmlSectionRender>();
 builder.Services.TryAddScoped<HtmlRender>();
 
 #if DEBUG
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
