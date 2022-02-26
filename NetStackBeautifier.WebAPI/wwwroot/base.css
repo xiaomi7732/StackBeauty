@@ -1,0 +1,53 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+textArea {
+    display: block;
+    width: 100%;
+
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    border-radius: 8px;
+
+    border: none;
+
+    padding: 16px;
+}
+
+textArea:focus {
+    outline: none;
+}
+
+textArea:focus::placeholder {
+    visibility: hidden;
+}
+
+textarea::-webkit-scrollbar {
+    width: 1em;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  height: 30px;
+}
+
+button {
+    font-size: 14px;
+    border-radius: 6px;
+    
+    padding: 8px 16px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.themeButton {
+    float: right;
+    margin-bottom: 20px;
+}

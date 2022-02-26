@@ -5,17 +5,22 @@ const divRenderPath = "/HtmlContent";
 const btnBeautify = document.getElementById('btnBeautify');
 const resultDiv = document.getElementById('result');
 const simpleCheckBox = document.getElementById('cbxRenderMode');
+const darkThemeButton = document.getElementById('themeDark');
+const lightThemeButton = document.getElementById('themeLight');
+const styleDiv = document.getElementById('themeStyleSheet');
 
-btnBeautify.addEventListener("click", BeautifyButtonClicked);
+btnBeautify.addEventListener("click", beautifyButtonClicked);
+darkThemeButton.addEventListener("click", onThemeChanged);
+lightThemeButton.addEventListener("click", onThemeChanged);
 
-async function BeautifyButtonClicked() {
+async function beautifyButtonClicked() {
     const callstackInput = document.getElementById("callstackinput").value;
-    const jsonResult = await GetBeautifiedAsync(callstackInput);
-    const divContent = await GetDivContent(jsonResult);
+    const jsonResult = await getBeautifiedAsync(callstackInput);
+    const divContent = await getDivContent(jsonResult);
     resultDiv.innerHTML = divContent;
 }
 
-async function GetBeautifiedAsync(data) {
+async function getBeautifiedAsync(data) {
     const response = await fetch(parserPath, {
         method: 'POST',
         headers: {
@@ -27,7 +32,7 @@ async function GetBeautifiedAsync(data) {
     return response.json();
 }
 
-async function GetDivContent(data) {
+async function getDivContent(data) {
     const response = await fetch(divRenderPath + '?' + new URLSearchParams({
         "RenderMode": simpleCheckBox.checked ? "Simple" : "Full"
     }), {
@@ -38,4 +43,9 @@ async function GetDivContent(data) {
         body: JSON.stringify(data),
     });
     return response.text();
+}
+
+function onThemeChanged(ev) {
+    const themeFileName = ev.target.value + ".css";
+    styleDiv.href = themeFileName;
 }

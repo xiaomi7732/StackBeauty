@@ -5,9 +5,17 @@
     <title>.NET Trace Beautifier</title>
     <meta charset='utf-8'>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="base.css">
+    <link id="themeStyleSheet" rel="stylesheet" href="dark.css">
 </head>
 
 <body>
+    <div style="text-align: right;">
+        <input type="radio" id="themeDark" name="theme" value="dark" checked>
+        <label for="theme">Dark</label>
+        <input type="radio" id="themeLight" name="theme" value="light">
+        <label for="theme">Light</label>
+    </div>
     <div>Paste in the call stack:</div>
     <div>
         <textarea id="callstackinput">Unhandled exception. System.InvalidCastException: TestGenericsException
@@ -16,7 +24,7 @@
     </div>
     <label for="cbxRenderMode">Simple</label>
     <input id="cbxRenderMode" type="checkbox" checked />
-    <input id="btnBeautify" type="button" value="Beautify It" />
+    <button id="btnBeautify">Beautify It</button>
     <div id="result">
     </div>
     <script src="app.js">
