@@ -41,6 +41,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//Setting the Default Files
+app.UseDefaultFiles(new DefaultFilesOptions(){
+    DefaultFileNames = new List<string>{
+        "index.html"
+    },
+});
+
 app.UseStaticFiles();
 
 app.UseAuthorization();
