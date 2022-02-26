@@ -11,5 +11,5 @@ public record FrameItem : IFrameLine
 
     public string? AssemblySignature { get; init; }
 
-    public List<Guid> Children { get; } = new List<Guid>();
+    public IDictionary<string, string> Tags { get; } = new Dictionary<string, string>();
 }

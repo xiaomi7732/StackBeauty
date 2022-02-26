@@ -20,20 +20,10 @@ namespace NetStackBeautifier.Services
             string input,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            IFrameLine? firstNode = null;
             foreach (string line in _lineBreaker.BreakIntoLines(input))
             {
                 // TODO: Revisit the logic to form hierarchy.
                 IFrameLine newItem = CreateFrameItem(line);
-                if (firstNode is null)
-                {
-                    firstNode = newItem;
-                }
-                else
-                {
-                    firstNode.Children.Add(newItem.Id);
-                }
-
                 yield return newItem switch
                 {
                     (FrameRawText rawText) => rawText,

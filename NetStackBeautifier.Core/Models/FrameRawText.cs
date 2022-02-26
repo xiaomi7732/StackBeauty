@@ -5,5 +5,5 @@ public record FrameRawText : IFrameLine
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
-    public List<Guid> Children { get; } = new List<Guid>();
+    public IDictionary<string, string> Tags { get; } = new Dictionary<string, string>();
 }
