@@ -6,6 +6,12 @@
     padding: 0;
 }
 
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;
@@ -40,9 +46,23 @@
     margin-left: 16px;
 }
 
+.tagline {
+    font-size: 24px;
+}
+
 .page-container .container {
-    width: 1000px;
+    width: 90%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container .container #adbg {
+    background: url(./StackBeautyBG.png) left top no-repeat;
+    background-size: contain;
+    width: 1000px;
+    height: 158px;
+    margin-bottom: 24px;
 }
 
 /* Skin */
@@ -52,10 +72,9 @@ textArea {
     font-size: 14px;
     margin-top: 5px;
     margin-bottom: 10px;
-    padding-left: 5px;
     border-radius: 6px;
     border: none;
-    padding: 16px;
+    padding: 12px;
 }
 
 textArea:focus {
@@ -82,18 +101,41 @@ button {
     cursor: pointer;
 }
 
-
-/* Target control by id */
-#simpleLabel {
-    margin-right: 24px;
+.command-line {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-top: 12px;
+    margin-left: 20px;
 }
 
-/* Style Classes */
-.themeButton {
-    float: right;
-    margin-bottom: 20px;
+.command-line #simpleLabel {
+    margin-left: 8px;
+    margin-right: 16px;
 }
 
+#btnBeautify {
+    margin-right: 12px;
+}
+
+#btnClearInput {
+    margin-right: 12px;
+}
+
+.btnGroupFirst {
+    border-radius: 6px 0 0 6px;
+}
+
+.btnGroupLast {
+    border-radius: 0 6px 6px 0;
+    margin-right: 12px;
+    border-left: 0px;
+}
+
+.btnGroupMiddle {
+    border-radius: 0;
+    border-left: 0px;
+}
 
 /* result */
 .result {
@@ -101,6 +143,12 @@ button {
     margin-top: 24px;
     padding: 16px;
     border-radius: 6px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.frame-line-container {
+    white-space: nowrap;
 }
 
 .frame-method-name {

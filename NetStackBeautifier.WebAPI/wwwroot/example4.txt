@@ -1,0 +1,12 @@
+Microsoft.Commerce.Model.ModelDimensionOptionGroupCollection!NormalizeKey
+Microsoft.Commerce.Collections.KeyedCollection`2[System.__Canon,System.__Canon]!GetValueOrDefault
+Microsoft.Commerce.Model.ModelDimensionOptionGroupCollection!GetSelectedDimension
+Microsoft.Commerce.Model.Builders.ModelReferenceBuilder`1[System.__Canon]!GetDimensionAsFact
+Microsoft.Commerce.Model.Builders.ModelReferenceBuilder`1+BuilderFactCollection[System.__Canon]!GetFallback
+Microsoft.Commerce.Model.Criteria.DimensionCriterion`1[System.__Canon]!Matches
+Microsoft.Commerce.SimpleRules.AggregateCriterion!Matches
+Microsoft.Commerce.Model.Builders.ModelReferenceBuilder`1[System.__Canon]!Build
+Microsoft.Commerce.Model.ModelReference`1[System.__Canon]!GetData
+Microsoft.Commerce.Model.ModelReference`1[System.__Canon]!TryLoadData
+Microsoft.Commerce.Model.ArtifactRepository.ModelReferenceArtifactGenerator`1+<>c__DisplayClass3_2[System.__Canon]!<ProcessDeserializedArtifacts>g__Hydrate|2
+mscorlib.ni.dll!6270759 [mscorlib.ni.pdb/fa1a429d998490881c873b0a3d3cc3bf1]

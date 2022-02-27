@@ -57,7 +57,7 @@ public class HtmlSectionRender : IRender<string>
             throw new ArgumentException("FrameItem.Method is required.");
         }
 
-        return $@"<div>
+        return $@"<div class='frame-line-container'>
 <span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault ?? frameItem.AssemblySignature)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
 {Render(frameItem.FileInfo)}
 </div>";

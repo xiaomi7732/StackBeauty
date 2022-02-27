@@ -20,16 +20,30 @@
             </div>
         </div>
         <div class="container">
-            <div>Paste in the call stack:</div>
+            <div class="tagline">Stack-reading easier</div>
+            <div id="adbg"></div>
+            <div>1. Paste in the call stack:</div>
             <div>
-                <textarea id="callstackinput">Unhandled exception. System.InvalidCastException: TestGenericsException
+                <textarea id="callstackinput" rows="3" placeholder="Paste in call stack here ..."
+                    class="boxsizingBorder">Unhandled exception. System.InvalidCastException: TestGenericsException
                 at LearnThrow.Program.TestGenerics[T,T2](Action`1 target, String s) in D:\Demo\LearnThrow\Program.cs:line 49
                 at LearnThrow.Program.Main(String[] args) in D:\Demo\LearnThrow\Program.cs:line 43</textarea>
             </div>
-            <input id="cbxRenderMode" type="checkbox" checked />
-            <label id="simpleLabel" for="cbxRenderMode">Simple</label>
-            <button id="btnBeautify">Beautify</button>
-            <div id="result" class="result">
+            <div>2. Toggle your options:</div>
+            <div class="command-line">
+                <input id="cbxRenderMode" type="checkbox" checked />
+                <label id="simpleLabel" for="cbxRenderMode">Simple</label>
+            </div>
+            <div>3. Run it:</div>
+            <div class="command-line">
+                <button id="btnBeautify">Beautify</button>
+                <button id="btnClearInput">Clear Input</button>
+                <button id="btnExampleInput1" class="btnGroupFirst">Example1</button>
+                <button id="btnExampleInput2" class="btnGroupMiddle">Example2</button>
+                <button id="btnExampleInput3" class="btnGroupMiddle">Example3</button>
+                <button id="btnExampleInput4" class="btnGroupLast">Example4</button>
+            </div>
+            <div id="result" class="result boxsizingBorder">
                 There's nothing too much. Try punch the Beautify button.
             </div>
             <script src="app.js">

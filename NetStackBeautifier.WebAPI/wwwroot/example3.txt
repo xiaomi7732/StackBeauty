@@ -1,0 +1,11 @@
+clr!Alloc
+clr!SlowAllocateString
+clr!FramedAllocateString
+mscorlib.ni!System.String.InternalSubString(Int32, Int32)
+mscorlib.ni!System.String.Substring(Int32, Int32)
+diagservice!DiagService.Runners.StringOperationRunner.Run(int32,value class DiagService.OperationEnum)
+diagservice!DiagService.Controllers.MemoryController.StringSubstring(int32)
+anonymously hosted dynamicmethods assembly!dynamicClass.lambda_method(pMT: 6FEF0FF8,class System.Object,class System.Object[])
+system.web.http!System.Web.Http.Controllers.ReflectedHttpActionDescriptor+ActionExecutor.Execute(class System.Object,class System.Object[])
+system.web.http!System.Web.Http.Controllers.ApiControllerActionInvoker+<InvokeActionAsyncCore>d__1.MoveNext()
+mscorlib!System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[System.__Canon].Start(!!0&)
