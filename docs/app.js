@@ -18,6 +18,7 @@ const btnExample2 = document.getElementById('btnExampleInput2');
 const btnExample3 = document.getElementById('btnExampleInput3');
 const btnExample4 = document.getElementById('btnExampleInput4');
 const btnExamples = [btnExample1, btnExample2, btnExample3, btnExample4];
+var timeoutHandler;
 
 const onThemeChanged = (ev) => {
     const themeFileName = ev.target.value + ".css";
@@ -60,17 +61,33 @@ async function inputExample(fileName) {
 async function beautifyButtonClicked() {
     const callstackInput = callstackInputTextArea.value;
     try {
+        timeoutHandler = setTimeout(() => setInprogressResult(), 500);
         const jsonResult = await getBeautifiedAsync(callstackInput);
         if (!jsonResult || jsonResult.length === 0) {
+            if (!!timeoutHandler) {
+                clearTimeout(timeoutHandler);
+            };
+
             throw {
                 title: "No content returned",
             };
         }
         const divContent = await getDivContent(jsonResult);
+        if (!!timeoutHandler) {
+            clearTimeout(timeoutHandler);
+        };
         resultDiv.innerHTML = divContent;
     } catch (ex) {
         console.error(ex);
+        if (!!timeoutHandler) {
+            clearTimeout(timeoutHandler);
+        };
         resultDiv.innerHTML = `An error happened. Details: ${ex.title}`;
+    }
+    finally {
+        if (!!timeoutHandler) {
+            clearTimeout(timeoutHandler);
+        };
     }
 }
 
@@ -100,4 +117,8 @@ async function getDivContent(data) {
         body: JSON.stringify(data),
     });
     return response.text();
+}
+
+function setInprogressResult() {
+    resultDiv.innerHTML = "It is cold. Give me a few seconds to warm up....";
 }
