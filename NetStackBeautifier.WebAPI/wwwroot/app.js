@@ -5,6 +5,7 @@ const btnBeautify = document.getElementById('btnBeautify');
 const btnClearInput = document.getElementById('btnClearInput');
 const resultDiv = document.getElementById('result');
 const simpleCheckBox = document.getElementById('cbxRenderMode');
+const cbxAutoSubmitExample = document.getElementById('cbxAutoSubmitExample');
 const darkThemeButton = document.getElementById('themeDark');
 const lightThemeButton = document.getElementById('themeLight');
 const styleDiv = document.getElementById('themeStyleSheet');
@@ -28,9 +29,14 @@ btnClearInput.addEventListener('click', () => {
 });
 darkThemeButton.addEventListener("click", onThemeChanged);
 lightThemeButton.addEventListener("click", onThemeChanged);
-callstackInputTextArea.addEventListener('input', (ev) => {
+
+callstackInputTextArea.addEventListener('input', async (ev) => {
     btnClearInput.disabled = (ev.target.value === "");
     btnBeautify.disabled = (ev.target.value === "");
+
+    if (cbxAutoSubmitExample.checked) {
+        await beautifyButtonClicked();
+    }
 });
 
 const exampleButtonCount = btnExamples.length;
@@ -43,6 +49,9 @@ async function inputExample(fileName) {
     callstackInputTextArea.value = await response.text();
     btnClearInput.disabled = false;
     btnBeautify.disabled = false;
+    if (cbxAutoSubmitExample.checked) {
+        await beautifyButtonClicked();
+    }
 }
 
 async function beautifyButtonClicked() {
