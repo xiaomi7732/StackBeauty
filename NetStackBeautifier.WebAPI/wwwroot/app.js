@@ -38,7 +38,6 @@ async function getBeautifiedAsync(data) {
 async function getDivContent(data) {
     const response = await fetch(divRenderPath + '?' + new URLSearchParams({
         "RenderMode": simpleCheckBox.checked ? "Simple" : "Full",
-        "t": darkThemeButton.checked ? darkThemeButton.value : lightThemeButton.value,
     }), {
         method: 'POST',
         headers: {

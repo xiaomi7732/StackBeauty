@@ -4,31 +4,38 @@
 <head>
     <title>.NET Trace Beautifier</title>
     <meta charset='utf-8'>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="base.css">
     <link id="themeStyleSheet" rel="stylesheet" href="dark.css">
 </head>
 
 <body>
-    <div style="text-align: right;">
-        <input type="radio" id="themeDark" name="theme" value="dark" checked>
-        <label for="theme">Dark</label>
-        <input type="radio" id="themeLight" name="theme" value="light">
-        <label for="theme">Light</label>
+    <div class="page-container">
+        <div class="header">
+            <div class="header-text">Stack Beauty</div>
+            <div class="theme-picker">
+                <input type="radio" id="themeDark" name="theme" value="dark" checked>
+                <label for="theme">Dark</label>
+                <input type="radio" id="themeLight" name="theme" value="light">
+                <label for="theme">Light</label>
+            </div>
+        </div>
+        <div class="container">
+            <div>Paste in the call stack:</div>
+            <div>
+                <textarea id="callstackinput">Unhandled exception. System.InvalidCastException: TestGenericsException
+                at LearnThrow.Program.TestGenerics[T,T2](Action`1 target, String s) in D:\Demo\LearnThrow\Program.cs:line 49
+                at LearnThrow.Program.Main(String[] args) in D:\Demo\LearnThrow\Program.cs:line 43</textarea>
+            </div>
+            <input id="cbxRenderMode" type="checkbox" checked />
+            <label id="simpleLabel" for="cbxRenderMode">Simple</label>
+            <button id="btnBeautify">Beautify</button>
+            <div id="result" class="result">
+                There's nothing too much. Try punch the Beautify button.
+            </div>
+            <script src="app.js">
+            </script>
+        </div>
     </div>
-    <div>Paste in the call stack:</div>
-    <div>
-        <textarea id="callstackinput">Unhandled exception. System.InvalidCastException: TestGenericsException
-            at LearnThrow.Program.TestGenerics[T,T2](Action`1 target, String s) in D:\Demo\LearnThrow\Program.cs:line 49
-            at LearnThrow.Program.Main(String[] args) in D:\Demo\LearnThrow\Program.cs:line 43</textarea>
-    </div>
-    <label for="cbxRenderMode">Simple</label>
-    <input id="cbxRenderMode" type="checkbox" checked />
-    <button id="btnBeautify">Beautify It</button>
-    <div id="result">
-    </div>
-    <script src="app.js">
-    </script>
 </body>
 
 </html>

@@ -1,24 +1,60 @@
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
 }
 
-#container {
-    width: 80%;
-    margin: 0 auto;
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+.page-container .header {
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 24px;
+}
+
+.page-container .header .header-text {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    flex-grow: 1;
+    padding-left: 32px;
+}
+
+.page-container .header .theme-picker {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.page-container .header .theme-picker input {
+    margin-right: 4px;
+    margin-left: 16px;
+}
+
+.page-container .container {
+    width: 1000px;
+    margin: auto;
+}
+
+/* Skin */
 textArea {
     display: block;
     width: 100%;
-
     font-size: 14px;
     margin-top: 5px;
     margin-bottom: 10px;
     padding-left: 5px;
-    border-radius: 8px;
-
+    border-radius: 6px;
     border: none;
-
     padding: 16px;
 }
 
@@ -35,19 +71,42 @@ textarea::-webkit-scrollbar {
 }
 
 textarea::-webkit-scrollbar-thumb {
-  height: 30px;
+    height: 30px;
 }
 
 button {
     font-size: 14px;
     border-radius: 6px;
-    
     padding: 8px 16px;
     width: fit-content;
     cursor: pointer;
 }
 
+
+/* Target control by id */
+#simpleLabel {
+    margin-right: 24px;
+}
+
+/* Style Classes */
 .themeButton {
     float: right;
     margin-bottom: 20px;
+}
+
+
+/* result */
+.result {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.frame-method-name {
+    font-weight: bold;
+}
+
+.frame-parameter-type {
+    font-weight: bold;
 }

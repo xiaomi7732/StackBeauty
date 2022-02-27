@@ -3,14 +3,18 @@
     color: #333333;
 }
 
+.page-container .header {
+    border-bottom: 1px solid #2080d4;
+}
+
 textArea {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 3px 4px rgba(0,0,0,.2);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
     border-bottom: 1px solid transparent;
 }
 
 textArea:focus {
-    box-shadow: 0 2px 3px rgba(32,128,212,.4);
+    box-shadow: 0 2px 3px rgba(32, 128, 212, .4);
     border-bottom: 1px solid #2080d4;
 }
 
@@ -23,15 +27,52 @@ button {
     color: #2080d4;
 }
 
-button:hover, #button:focus {
+#button:hover, #button:focus {
     background: rgba(32, 128, 212, 0.1);
 }
 
 textarea::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
 textarea::-webkit-scrollbar-thumb {
     background-color: #3333;
     outline: 1px solid slategrey;
-  }
+}
+
+.result
+{
+    border: #336B87 solid 1px;
+}
+
+.description-text {
+    color: #333333;
+}
+
+.frame-class-name {
+    color: #996800;
+}
+
+.frame-method-name {
+    color: #2271B1;
+}
+
+.frame-parameter-list {
+    color: #362400;
+}
+
+.frame-file-path {
+    color: #336B87;
+}
+
+.frame-file-line {
+    color: #D63638;
+}
+
+.frame-parameter-type {
+    color: #043959;
+}
+
+.frame-parameter-name {
+    color: #362400;
+}

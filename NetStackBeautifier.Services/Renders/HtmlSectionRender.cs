@@ -90,7 +90,7 @@ public class HtmlSectionRender : IRender<string>
         string parameterList = string.Empty;
         foreach (FrameParameter p in parameters)
         {
-            parameterList += $"<span class='frame-parameter-type'>{HttpUtility.HtmlEncode(p.ParameterType)}</span>&nbsp;<span>{HttpUtility.HtmlEncode(p.ParameterName)}</span>,&nbsp;";
+            parameterList += $"<span class='frame-parameter-type'>{HttpUtility.HtmlEncode(p.ParameterType)}</span>&nbsp;<span class='frame-parameter-name'>{HttpUtility.HtmlEncode(p.ParameterName)}</span>,&nbsp;";
         }
 
         return $"<span class='frame-parameter-list'>({parameterList.Substring(0, parameterList.Length - 7)})</span>";
