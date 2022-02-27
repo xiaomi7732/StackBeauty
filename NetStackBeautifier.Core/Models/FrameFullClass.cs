@@ -39,7 +39,7 @@ public record FrameFullClass
                 int sectionNum = NameSections.NullAsEmpty().Count();
                 if (sectionNum > 1)
                 {
-                    return string.Join('.', NameSections.Skip(sectionNum - 2));
+                    return string.Join('.', NameSections.NullAsEmpty().Skip(sectionNum - 2));
                 }
             }
 
