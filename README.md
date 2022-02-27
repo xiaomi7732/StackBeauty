@@ -7,6 +7,10 @@ And we shall try to make a change there.
 
 This is going to be a service, taking in a chuck of text, understand the type of the call stack, beautify it and then return.
 
+## Live site
+
+[Stack Beauty](http://stackbeauty.codewithsaar.net/)
+
 ## Challenge
 
 There are various formats for call stack the user could get. And that shouldn't matter to the user. As long as it is a .NET stack, this service shall be able to recognize it, beautify it and return the result to the user.
