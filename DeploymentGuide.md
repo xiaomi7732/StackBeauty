@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="1.0.0-alpha3"
+$RELEASE_VERSION="1.0.0-beta3"
 ```
 
 ```shell
