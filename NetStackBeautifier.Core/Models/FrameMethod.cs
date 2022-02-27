@@ -8,5 +8,11 @@ namespace NetStackBeautifier.Core
         /// Gets or initializes the parameter list for the method.
         /// </summary>
         public IEnumerable<FrameParameter> Parameters { get; init; } = Enumerable.Empty<FrameParameter>();
+
+        /// <summary>
+        /// Generic types.
+        /// </summary>
+        /// <typeparam name="string"></typeparam>
+        public IEnumerable<string> GenericParameterTypes{get; init;} = Enumerable.Empty<string>();
     }
 }

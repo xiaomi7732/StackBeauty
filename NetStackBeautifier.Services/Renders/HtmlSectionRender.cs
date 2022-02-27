@@ -58,9 +58,21 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return $@"<div class='frame-line-container'>
-<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault ?? frameItem.AssemblySignature)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>{{}}</span>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>&nbsp;{{ ... }}</span>
 {Render(frameItem.FileInfo)}
 </div>";
+    }
+
+    private string RenderGenericMethodTypes(FrameMethod method)
+    {
+        if (!method.GenericParameterTypes.NullAsEmpty().Any())
+        {
+            return string.Empty;
+        }
+
+        string typeList = string.Join(", ", method.GenericParameterTypes);
+
+        return $"<span class='frame-method-generic-parameters'>{HttpUtility.HtmlEncode('<' + typeList + '>')}</span>";
     }
 
     private string RenderClassGenericTypes(IEnumerable<string>? genericParameterTypes)
@@ -84,7 +96,7 @@ public class HtmlSectionRender : IRender<string>
     {
         if (parameters.Count == 0)
         {
-            return string.Empty;
+            return $"<span class='frame-parameter-list-empty'>(..)</span>";
         }
 
         string parameterList = string.Empty;

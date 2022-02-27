@@ -3,6 +3,7 @@ using NetStackBeautifier.Core;
 
 namespace NetStackBeautifier.Services.LineBeautifiers;
 
+[Obsolete("Not needed anymore", error: true)]
 internal class AzureProfilerMethodEndingBeautifier<T> : LineBeautifierBase<T>
     where T : BeautifierBase<T>
 {
