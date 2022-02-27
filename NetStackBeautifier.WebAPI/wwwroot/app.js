@@ -49,6 +49,11 @@ async function beautifyButtonClicked() {
     const callstackInput = callstackInputTextArea.value;
     try {
         const jsonResult = await getBeautifiedAsync(callstackInput);
+        if (!jsonResult || jsonResult.length === 0) {
+            throw {
+                title: "No content returned",
+            };
+        }
         const divContent = await getDivContent(jsonResult);
         resultDiv.innerHTML = divContent;
     } catch (ex) {
@@ -69,7 +74,6 @@ async function getBeautifiedAsync(data) {
     if (response.ok) {
         return response.json();
     }
-
     throw await response.json();
 }
 
