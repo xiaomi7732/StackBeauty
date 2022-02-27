@@ -8,7 +8,23 @@ body {
 }
 
 .page-container .container #adbg {
-    box-shadow: 4px 4px 4px 0 #2c2c32 inset, -4px -4px 4px 0 #2c2c32 inset; 
+    box-shadow: 4px 4px 4px 0 #2c2c32 inset, -4px -4px 4px 0 #2c2c32 inset;
+}
+
+/* Theme picker */
+.theme-picker input[type="radio"]:checked+label {
+    background-color: #2080d44d;
+}
+
+.theme-picker label {
+    box-shadow: 0px 2px 3px rgba(255, 255, 255, 0.2);
+
+    color: #8cc0ed;
+    border: 1px solid #8cc0ed;
+}
+
+.theme-picker label:hover {
+    background: #2080d44d;
 }
 
 textArea {
@@ -33,7 +49,7 @@ button {
 }
 
 button:hover, button:focus {
-    background: rgba(32, 128, 212, 0.3);
+    background: #2080d44d;
 }
 
 textarea::-webkit-scrollbar-track {
@@ -45,8 +61,7 @@ textarea::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
-.result
-{
+.result {
     border: #336B87 solid 1px;
     background-color: #161616;
 }

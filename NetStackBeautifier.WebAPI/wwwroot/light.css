@@ -1,4 +1,4 @@
-* {
+body {
     background-color: white;
     color: #333333;
 }
@@ -8,7 +8,24 @@
 }
 
 .page-container .container #adbg {
-    box-shadow: 4px 4px 4px 0 #ffffff inset, -4px -4px 4px 0 #ffffff inset; 
+    box-shadow: 4px 4px 4px 0 #ffffff inset, -4px -4px 4px 0 #ffffff inset;
+}
+
+/* Theme picker */
+.theme-picker input[type="radio"]:checked+label {
+    background-color: #2080d4;
+    color: white;
+}
+
+.theme-picker label {
+    box-shadow: 0px 2px 3px rgba(51, 51, 51, 0.2);
+
+    color: #2080d4;
+    border: 1px solid #2080d4;
+}
+
+.theme-picker label:hover {
+    background: #2080d44d;
 }
 
 textArea {
@@ -44,9 +61,9 @@ textarea::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
-.result
-{
+.result {
     border: #336B87 solid 1px;
+    background-color: #f0f0f0;
 }
 
 .description-text {

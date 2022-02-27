@@ -12,22 +12,24 @@
     <div class="page-container">
         <div class="header">
             <div class="header-text">Stack Beauty</div>
-            <div class="theme-picker">
-                <input type="radio" id="themeDark" name="theme" value="dark" checked>
-                <label for="theme">Dark</label>
-                <input type="radio" id="themeLight" name="theme" value="light">
-                <label for="theme">Light</label>
-            </div>
+            <ul class="theme-picker">
+                <li>
+                    <input type="radio" id="themeDark" name="theme" value="dark" checked />
+                    <label for="themeDark">Dark</label>
+                </li>
+                <li>
+                    <input type="radio" id="themeLight" name="theme" value="light" />
+                    <label for="themeLight">Light</label>
+                </li>
+            </ul>
         </div>
         <div class="container">
             <div class="tagline">Stack-reading easier</div>
             <div id="adbg"></div>
-            <div>1. Paste in the call stack:</div>
+            <div>1. Paste in the call stack (or choose from the examples below):</div>
             <div>
                 <textarea id="callstackinput" rows="3" placeholder="Paste in call stack here ..."
-                    class="boxsizingBorder">Unhandled exception. System.InvalidCastException: TestGenericsException
-                at LearnThrow.Program.TestGenerics[T,T2](Action`1 target, String s) in D:\Demo\LearnThrow\Program.cs:line 49
-                at LearnThrow.Program.Main(String[] args) in D:\Demo\LearnThrow\Program.cs:line 43</textarea>
+                    class="boxsizingBorder"></textarea>
             </div>
             <div>2. Toggle your options:</div>
             <div class="command-line">
