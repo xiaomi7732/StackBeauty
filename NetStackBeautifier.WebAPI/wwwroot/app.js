@@ -1,3 +1,5 @@
+const backend = ""
+
 const parserPath = "/Beautified";
 const divRenderPath = "/HtmlContent";
 
@@ -72,7 +74,7 @@ async function beautifyButtonClicked() {
 }
 
 async function getBeautifiedAsync(data) {
-    const response = await fetch(parserPath, {
+    const response = await fetch(backend + parserPath, {
         method: 'POST',
         headers: {
             'Content-Type': 'text/plain'
@@ -87,7 +89,7 @@ async function getBeautifiedAsync(data) {
 }
 
 async function getDivContent(data) {
-    const response = await fetch(divRenderPath + '?' + new URLSearchParams({
+    const response = await fetch(backend + divRenderPath + '?' + new URLSearchParams({
         "RenderMode": simpleCheckBox.checked ? "Simple" : "Full",
     }), {
         method: 'POST',
