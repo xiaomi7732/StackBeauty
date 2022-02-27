@@ -122,18 +122,23 @@ button {
 }
 
 button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  color: #666666;
+button[disabled] {
+    border: 1px solid #999999;
+    color: #666666;
 }
 
 .command-line {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     margin-top: 12px;
     margin-left: 20px;
     margin-bottom: 8px;
+}
+
+.command-line>div {
+    display: flex;
 }
 
 .command-line label {
@@ -184,4 +189,18 @@ button[disabled]{
 
 .frame-parameter-type {
     font-weight: bold;
+}
+
+/* Smaller screen */
+@media screen and (min-width: 0px) and (max-width: 999px) {
+    #adbg {
+        display: none;
+    }
+}
+
+/* Larger screen */
+@media screen and (min-width: 1000px) {
+    #adbg {
+        display: block;
+    }
 }
