@@ -1,1 +1,61 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Stack Beauty</title>
+    <meta charset='utf-8'>
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <link id="themeStyleSheet" rel="stylesheet" href="dark.css">
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="header">
+            <div class="header-text">Stack Beauty</div>
+            <ul class="theme-picker">
+                <li>
+                    <input type="radio" id="themeDark" name="theme" value="dark" checked />
+                    <label for="themeDark">Dark</label>
+                </li>
+                <li>
+                    <input type="radio" id="themeLight" name="theme" value="light" />
+                    <label for="themeLight">Light</label>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="tagline">Stack-reading easier</div>
+            <div id="adbg"></div>
+            <div>1. Paste in the call stack (or choose from the examples below):</div>
+            <div>
+                <textarea id="callstackinput" rows="3" placeholder="Paste in call stack here ..."
+                    class="boxsizingBorder"></textarea>
+            </div>
+            <div>2. Toggle your options:</div>
+            <div class="command-line">
+                <input id="cbxRenderMode" type="checkbox" checked />
+                <label id="simpleLabel" for="cbxRenderMode">Simple</label>
+                <input id="cbxAutoSubmitExample" type="checkbox" checked />
+                <label for="cbxAutoSubmitExample">Auto Submit</label>
+            </div>
+            <div>3. Run it:</div>
+            <div class="command-line">
+                <button id="btnBeautify" disabled>Beautify</button>
+                <button id="btnClearInput" disabled>Clear Input</button>
+                <button id="btnExampleInput1" class="btnGroupFirst">Example1</button>
+                <button id="btnExampleInput2" class="btnGroupMiddle">Example2</button>
+                <button id="btnExampleInput3" class="btnGroupMiddle">Example3</button>
+                <button id="btnExampleInput4" class="btnGroupLast">Example4</button>
+            </div>
+            <div id="result" class="result boxsizingBorder">
+                There's nothing too much. Try punch the Beautify button.
+            </div>
+        </div>
+    </div>
+    <script src="app.js">
+    </script>
+</body>
+
+</html>
