@@ -48,9 +48,16 @@ button {
     color: #2080d4;
 }
 
-#button:hover, #button:focus {
-    background: rgba(32, 128, 212, 0.1);
+button:hover, button:focus {
+    background: #2080d41a;
 }
+
+button:hover[disabled], button:focus[disabled] {
+    border: 1px solid #999999;
+    color: #666666;
+    background-color: transparent;
+}
+
 
 textarea::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);

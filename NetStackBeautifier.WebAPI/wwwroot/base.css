@@ -120,6 +120,12 @@ button {
     cursor: pointer;
 }
 
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  color: #666666;
+}
+
 .command-line {
     display: flex;
     flex-direction: row;

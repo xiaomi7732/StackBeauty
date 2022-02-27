@@ -23,12 +23,14 @@ const onThemeChanged = (ev) => {
 btnBeautify.addEventListener("click", beautifyButtonClicked);
 btnClearInput.addEventListener('click', () => {
     callstackInputTextArea.value = "";
-    btnClearInput.hidden = true;
+    btnClearInput.disabled = true;
+    btnBeautify.disabled = true;
 });
 darkThemeButton.addEventListener("click", onThemeChanged);
 lightThemeButton.addEventListener("click", onThemeChanged);
 callstackInputTextArea.addEventListener('input', (ev) => {
-    btnClearInput.hidden = (ev.target.value === "");
+    btnClearInput.disabled = (ev.target.value === "");
+    btnBeautify.disabled = (ev.target.value === "");
 });
 
 const exampleButtonCount = btnExamples.length;
@@ -39,14 +41,20 @@ for (let i = 0; i < exampleButtonCount; i++) {
 async function inputExample(fileName) {
     const response = await fetch(fileName);
     callstackInputTextArea.value = await response.text();
-    btnClearInput.hidden = false;
+    btnClearInput.disabled = false;
+    btnBeautify.disabled = false;
 }
 
 async function beautifyButtonClicked() {
     const callstackInput = callstackInputTextArea.value;
-    const jsonResult = await getBeautifiedAsync(callstackInput);
-    const divContent = await getDivContent(jsonResult);
-    resultDiv.innerHTML = divContent;
+    try {
+        const jsonResult = await getBeautifiedAsync(callstackInput);
+        const divContent = await getDivContent(jsonResult);
+        resultDiv.innerHTML = divContent;
+    } catch (ex) {
+        console.error(ex);
+        resultDiv.innerHTML = `An error happened. Details: ${ex.title}`;
+    }
 }
 
 async function getBeautifiedAsync(data) {
@@ -58,7 +66,11 @@ async function getBeautifiedAsync(data) {
         body: data,
     });
 
-    return response.json();
+    if (response.ok) {
+        return response.json();
+    }
+
+    throw await response.json();
 }
 
 async function getDivContent(data) {
