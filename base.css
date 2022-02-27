@@ -1,0 +1,187 @@
+* {
+    font-family: Verdana, sans-serif;
+    font-size: .97em;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-container .header {
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 24px;
+}
+
+.page-container .header .header-text {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    flex-grow: 1;
+    padding-left: 32px;
+}
+
+/* Theme picker */
+.theme-picker {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.theme-picker input[type="radio"] {
+    display: none;
+}
+
+.theme-picker li:first-child label {
+    border-radius: 6px 1px 1px 6px;
+}
+
+.theme-picker li:last-child label {
+    border-left-width: 0;
+    border-radius: 1px 6px 6px 1px;
+}
+
+.theme-picker label {
+    cursor: pointer;
+    display: flex;
+    width: 80px;
+    height: 32px;
+    border-radius: 2px;
+    justify-content: center;
+    align-items: center;
+}
+
+.tagline {
+    font-size: 24px;
+}
+
+.page-container .container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container .container #adbg {
+    background: url(./StackBeautyBG.png) left top no-repeat;
+    background-size: contain;
+    width: 1000px;
+    height: 158px;
+    margin-bottom: 24px;
+}
+
+/* Skin */
+textArea {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: none;
+    padding: 12px;
+}
+
+textArea:focus {
+    outline: none;
+}
+
+textArea:focus::placeholder {
+    visibility: hidden;
+}
+
+textarea::-webkit-scrollbar {
+    width: 1em;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    height: 30px;
+}
+
+button {
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 8px 16px;
+    width: fit-content;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  color: #666666;
+}
+
+.command-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    margin-left: 20px;
+    margin-bottom: 8px;
+}
+
+.command-line label {
+    margin-left: 6px;
+    margin-right: 16px;
+}
+
+#btnBeautify {
+    margin-right: 12px;
+}
+
+#btnClearInput {
+    margin-right: 12px;
+}
+
+.btnGroupFirst {
+    border-radius: 6px 0 0 6px;
+}
+
+.btnGroupLast {
+    border-radius: 0 6px 6px 0;
+    margin-right: 12px;
+    border-left: 0px;
+}
+
+.btnGroupMiddle {
+    border-radius: 0;
+    border-left: 0px;
+}
+
+/* result */
+.result {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.frame-line-container {
+    white-space: nowrap;
+}
+
+.frame-method-name {
+    font-weight: bold;
+}
+
+.frame-parameter-type {
+    font-weight: bold;
+}
