@@ -81,8 +81,16 @@ textarea::-webkit-scrollbar-thumb {
     color: #996800;
 }
 
+.frame-class-generic-parameter-list {
+    color: #a37000;
+}
+
 .frame-method-name {
     color: #2271B1;
+}
+
+.frame-method-generic-parameters{
+    color: #5f4100;
 }
 
 .frame-parameter-list {

@@ -43,6 +43,13 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     private const string AssemblyInfoWithPathInfo = @"^[\s]*(.*?):[\s]*(.*):[\s]*([\d]+)$";
     private readonly Regex _assemblyInfoWithPathMatcher = new Regex(AssemblyInfoWithPathInfo, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
+    // Simple matcher to split method name and its generic parameters
+    // For example: TestGenerics[T,T2]
+    // Group[1] method name: TestGenerics
+    // Group[2] Type parameter list: T,T2
+    private const string MethodNameGenericParameterExp = @"^(.*)\[(.*)\]$";
+    private readonly Regex _methodNameTypeParameterMatch = new Regex(MethodNameGenericParameterExp, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
     public SimpleExceptionStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<SimpleExceptionStackBeautifier>> lineBeautifiers,
@@ -86,13 +93,17 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
 
         (string assemblyInfo, FrameFileInfo? fileInfoInFrameSignature) = ParseAssemblySignature(mainPartsMatch.Groups[3].Value);
         frameFileInfo ??= fileInfoInFrameSignature;
+
+        string methodName = PickSolidStringFromGroup(mainPartsMatch.Groups[2], mainPartsMatch.Groups[5]);
+        (methodName, IEnumerable<string> methodTypeParameters) = ParseMethodGenericParameters(methodName);
         FrameItem newFrameItem = new FrameItem()
         {
             FullClass = _frameClassNameFactory.FromString(PickSolidStringFromGroup(mainPartsMatch.Groups[4], mainPartsMatch.Groups[1])),
             Method = new FrameMethod()
             {
-                Name = PickSolidStringFromGroup(mainPartsMatch.Groups[2], mainPartsMatch.Groups[5]),
+                Name = methodName,
                 Parameters = ParseParameters(mainPartsMatch.Groups[6].Value),
+                GenericParameterTypes = methodTypeParameters,
             },
             FileInfo = frameFileInfo,
             AssemblySignature = assemblyInfo,
@@ -147,13 +158,13 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
 
     private (string, FrameFileInfo? fileInfo) ParseAssemblySignature(string assemblySignature)
     {
-        if(string.IsNullOrEmpty(assemblySignature))
+        if (string.IsNullOrEmpty(assemblySignature))
         {
             return (string.Empty, null);
         }
 
         Match match = _assemblyInfoWithPathMatcher.Match(assemblySignature);
-        if(match.Success)
+        if (match.Success)
         {
             return (match.Groups[1].Value, new FrameFileInfo(match.Groups[2].Value, int.Parse(match.Groups[3].Value)));
         }
@@ -165,5 +176,21 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
     private string PickSolidStringFromGroup(params Group[] groups)
     {
         return groups.First(g => !string.IsNullOrEmpty(g.Value)).Value;
+    }
+
+    private (string, IEnumerable<string>) ParseMethodGenericParameters(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return (string.Empty, Enumerable.Empty<string>());
+        }
+
+        Match match = _methodNameTypeParameterMatch.Match(input);
+        if (match.Success)
+        {
+            return (match.Groups[1].Value, match.Groups[2].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+        }
+
+        return (input, Enumerable.Empty<string>());
     }
 }
