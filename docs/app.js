@@ -1,5 +1,5 @@
 // const backend = "https://stackbeauty-dev.whiteplant-313c6159.eastus2.azurecontainerapps.io/"
-const backend = "https://localhost:7079/"
+const backend = "https://localhost:7079"
 
 const parserPath = "/Beautified";
 const divRenderPath = "/HtmlContent";
