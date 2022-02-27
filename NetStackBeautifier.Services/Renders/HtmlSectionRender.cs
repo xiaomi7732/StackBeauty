@@ -58,7 +58,7 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return $@"<div class='frame-line-container'>
-<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} {HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>&nbsp;{{ ... }}</span>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} || Tracking Id:{HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>&nbsp;{{ ... }}</span>
 {Render(frameItem.FileInfo)}
 </div>";
     }
