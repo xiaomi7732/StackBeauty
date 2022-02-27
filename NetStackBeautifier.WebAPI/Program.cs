@@ -19,6 +19,13 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(policy =>
+{
+    policy.WithOrigins("https://xiaomi7732.github.io")
+    .AllowAnyHeader()
+    .AllowAnyMethod();
+}));
+
 builder.Services.RegisterExceptionBeautifier();
 builder.Services.TryAddScoped<HtmlSectionRender>();
 builder.Services.TryAddScoped<HtmlRender>();
@@ -42,13 +49,16 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //Setting the Default Files
-app.UseDefaultFiles(new DefaultFilesOptions(){
+app.UseDefaultFiles(new DefaultFilesOptions()
+{
     DefaultFileNames = new List<string>{
         "index.html"
     },
 });
 
 app.UseStaticFiles();
+
+app.UseCors();
 
 app.UseAuthorization();
 
