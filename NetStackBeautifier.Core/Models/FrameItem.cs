@@ -7,7 +7,7 @@ public record FrameItem : IFrameLine
 
     public FrameFileInfo? FileInfo { get; init; }
 
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
 
     public string? AssemblySignature { get; init; }
 
