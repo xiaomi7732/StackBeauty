@@ -6,7 +6,7 @@ using NetStackBeautifier.Services.Renders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Insert(0, new TextMediaTypeFormatter());
