@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="1.0.0-beta5"
+$RELEASE_VERSION="1.0.0-beta6"
 ```
 
   * RG related
@@ -48,7 +48,7 @@ $RELEASE_VERSION="1.0.0-beta5"
   ```shell
   az containerapp update -n $CONTAINER_APP_NAME `
     -g $RESOURCE_GROUP `
-    --image "$REPO_IMAGE_TAG"
+    --image "$REPO_IMAGE_TAG" `
     --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
   ```
 
