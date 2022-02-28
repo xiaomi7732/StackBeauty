@@ -58,8 +58,16 @@ async function inputExample(fileName) {
 }
 
 async function beautifyButtonClicked() {
+    const waitingSign = '...';
+
     const callstackInput = callstackInputTextArea.value;
-    resultDiv.innerHTML = "It is cold. Give me a few seconds to warm up....";
+    resultDiv.innerHTML = waitingSign;
+    const timeoutHandle = setTimeout((condition, ctrl) => {
+        if (ctrl.innerHTML === condition) {
+            const coldPrompt = 'The backend feels cold. Give me a few seconds to warm it up....';
+            ctrl.innerHTML = coldPrompt;
+        }
+    }, 1000, waitingSign, resultDiv);
     try {
         const jsonResult = await getBeautifiedAsync(callstackInput);
         if (!jsonResult || jsonResult.length === 0) {
@@ -72,6 +80,9 @@ async function beautifyButtonClicked() {
     } catch (ex) {
         console.error(ex);
         resultDiv.innerHTML = `An error happened. Details: ${ex.title}`;
+    }
+    finally {
+        clearTimeout(timeoutHandle);
     }
 }
 
