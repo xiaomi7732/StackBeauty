@@ -7,6 +7,10 @@ body {
     border-bottom: 1px solid #646464;
 }
 
+#brand-area #project-info a {
+    color:#dddddd
+}
+
 .page-container .container #adbg {
     box-shadow: 4px 4px 4px 0 #2c2c32 inset, -4px -4px 4px 0 #2c2c32 inset;
 }

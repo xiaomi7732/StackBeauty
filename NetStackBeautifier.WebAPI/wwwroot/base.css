@@ -27,12 +27,29 @@
     margin-bottom: 24px;
 }
 
-.page-container .header .header-text {
+.page-container #brand-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#brand-area #header-text {
     font-size: 24px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
-    flex-grow: 1;
     padding-left: 32px;
+}
+
+#brand-area #project-info {
+    padding-left: 32px;
+}
+
+#brand-area #project-info a {
+    text-decoration: none;
+}
+
+#brand-area #project-info a:hover {
+    text-decoration: underline;
 }
 
 /* Theme picker */
@@ -196,11 +213,20 @@ button[disabled] {
     #adbg {
         display: none;
     }
+
+    .page-container .header {
+        height: 48px;
+    }
 }
 
 /* Larger screen */
 @media screen and (min-width: 1000px) {
     #adbg {
         display: block;
+    }
+
+    .page-container #brand-area {
+        flex-direction: row;
+        align-items: baseline;
     }
 }
