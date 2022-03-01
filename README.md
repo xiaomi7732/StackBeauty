@@ -1,4 +1,4 @@
-# NetStack Beautifier
+# Stack Beauty
 
 .NET Call Stack is a chuck of text that is not easy to read.
 And we shall try to make a change there.

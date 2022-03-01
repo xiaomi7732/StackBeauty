@@ -7,6 +7,10 @@ body {
     border-bottom: 1px solid #2080d4;
 }
 
+#brand-area #header-text a {
+    color: #333333;
+}
+
 #brand-area #project-info a {
     color:#333333;
 }

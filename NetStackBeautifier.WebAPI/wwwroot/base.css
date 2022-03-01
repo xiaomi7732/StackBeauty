@@ -40,6 +40,10 @@
     padding-left: 32px;
 }
 
+#brand-area #header-text a {
+    text-decoration: none;
+}
+
 #brand-area #project-info {
     padding-left: 32px;
 }
@@ -84,6 +88,13 @@
 
 .tagline {
     font-size: 24px;
+}
+
+.description-line{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 100;
+    margin-bottom: 12px;
 }
 
 .page-container .container {
