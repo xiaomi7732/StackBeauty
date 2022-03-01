@@ -186,6 +186,18 @@ button[disabled] {
     border-left: 0px;
 }
 
+.analysis-markdown-container {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+code {
+    padding: 1px 1px 1px 1px;
+    margin: 0 1px 0 1px;
+}
+
 /* result */
 .result {
     width: 100%;

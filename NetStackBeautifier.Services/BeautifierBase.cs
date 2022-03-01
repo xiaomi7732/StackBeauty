@@ -5,7 +5,7 @@ using NetStackBeautifier.Services.Filters;
 namespace NetStackBeautifier.Services
 {
     internal abstract class BeautifierBase<T> : IBeautifier
-        where T: IBeautifier
+        where T : IBeautifier
     {
         private readonly LineBreaker _lineBreaker;
         private readonly IEnumerable<ILineBeautifier<T>> _lineBeautifiers;
@@ -29,22 +29,22 @@ namespace NetStackBeautifier.Services
             {
                 // TODO: Revisit the logic to form hierarchy.
                 IFrameLine newItem = CreateFrameItem(line);
-                yield return newItem switch
-                {
-                    (FrameRawText rawText) => rawText,
-                    (FrameItem frameItem) => await BeautifyAsync(frameItem, cancellationToken),
-                    _ => throw new InvalidOperationException("Unsupported frame item type."),
-                };
+                yield return await BeautifyAsync(newItem, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        private async Task<FrameItem> BeautifyAsync(FrameItem input, CancellationToken cancellationToken)
+        private async Task<IFrameLine> BeautifyAsync(IFrameLine input, CancellationToken cancellationToken)
         {
-            foreach (ILineBeautifier<T> lineBeautifier in _lineBeautifiers)
+            if (input is FrameItem frameItem)
             {
-                input = await lineBeautifier.BeautifyAsync(input, cancellationToken);
+                foreach (ILineBeautifier<T> lineBeautifier in _lineBeautifiers)
+                {
+                    frameItem = await lineBeautifier.BeautifyAsync(frameItem, cancellationToken);
+                }
+                input = frameItem;
             }
-            foreach(IFrameFilter<T> filter in _filters)
+
+            foreach (IFrameFilter<T> filter in _filters)
             {
                 filter.Filter(input);
             }

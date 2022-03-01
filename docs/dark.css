@@ -71,6 +71,16 @@ textarea::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
+.analysis-markdown-container {
+    /* border-bottom: 1px solid #ff0000; */
+    border-bottom-color: rgb(187, 187, 187);
+}
+
+code {
+    border: 1px solid #336B87;
+    background-color: #252525;
+}
+
 .result {
     border: #336B87 solid 1px;
     background-color: #161616;

@@ -72,6 +72,11 @@ textarea::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
+code {
+    border: 1px solid #336B87;
+    background-color: #e8f0ff;
+}
+
 .result {
     border: #336B87 solid 1px;
     background-color: #f0f0f0;

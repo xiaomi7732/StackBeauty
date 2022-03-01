@@ -1,11 +1,14 @@
 using System.Text;
 using System.Web;
 using NetStackBeautifier.Core;
+using Markdig;
 
 namespace NetStackBeautifier.Services.Renders;
 
 public class HtmlSectionRender : IRender<string>
 {
+    private const string AnalysisMarkDownKey = "AnalysisMarkDown";
+
     public Task<string> RenderAsync(
         IReadOnlyCollection<IFrameLine> data,
         RenderOptions renderOptions,
@@ -13,10 +16,17 @@ public class HtmlSectionRender : IRender<string>
     {
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.AppendLine("<div>");
+
+        int beginPos = htmlBuilder.Length - 1;
+        string analysisMarkdown = string.Empty;
         try
         {
             foreach (IFrameLine line in data)
             {
+                if (line.Tags.ContainsKey(AnalysisMarkDownKey))
+                {
+                    analysisMarkdown = line.Tags[AnalysisMarkDownKey];
+                }
                 string lineToAdd = line switch
                 {
                     FrameRawText rawText => RenderLine(rawText),
@@ -30,6 +40,12 @@ public class HtmlSectionRender : IRender<string>
                 }
                 htmlBuilder.AppendLine(lineToAdd);
             }
+
+            // Append analysis markdown
+            if (!string.IsNullOrEmpty(analysisMarkdown))
+            {
+                htmlBuilder.Insert(beginPos, RenderAnalysis(analysisMarkdown));
+            }
         }
         finally
         {
@@ -37,6 +53,11 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return Task.FromResult(htmlBuilder.ToString());
+    }
+
+    private string RenderAnalysis(string markdown)
+    {
+        return $"<div class='analysis-markdown-container'>{Markdown.ToHtml(markdown)}</div>";
     }
 
     private string RenderLine(FrameRawText rawText)
