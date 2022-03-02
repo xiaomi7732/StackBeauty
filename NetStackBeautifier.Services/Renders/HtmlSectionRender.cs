@@ -15,30 +15,38 @@ public class HtmlSectionRender : IRender<string>
         CancellationToken cancellationToken)
     {
         StringBuilder htmlBuilder = new StringBuilder();
-        htmlBuilder.AppendLine("<div>");
+        htmlBuilder.AppendLine("<div class='frame-content'>");
 
         int beginPos = htmlBuilder.Length - 1;
         string analysisMarkdown = string.Empty;
         try
         {
-            foreach (IFrameLine line in data)
+            htmlBuilder.AppendLine("<div class='frame-lines'>");
+            try
             {
-                if (line.Tags.ContainsKey(AnalysisMarkDownKey))
+                foreach (IFrameLine line in data)
                 {
-                    analysisMarkdown = line.Tags[AnalysisMarkDownKey];
+                    if (line.Tags.ContainsKey(AnalysisMarkDownKey))
+                    {
+                        analysisMarkdown = line.Tags[AnalysisMarkDownKey];
+                    }
+                    string lineToAdd = line switch
+                    {
+                        FrameRawText rawText => RenderLine(rawText),
+                        FrameItem item => RenderLine(item, renderOptions),
+                        _ => throw new NotSupportedException(),
+                    };
+                    // Nothing to append when nothing returned.
+                    if (string.IsNullOrEmpty(lineToAdd))
+                    {
+                        continue;
+                    }
+                    htmlBuilder.AppendLine(lineToAdd);
                 }
-                string lineToAdd = line switch
-                {
-                    FrameRawText rawText => RenderLine(rawText),
-                    FrameItem item => RenderLine(item, renderOptions),
-                    _ => throw new NotSupportedException(),
-                };
-                // Nothing to append when nothing returned.
-                if (string.IsNullOrEmpty(lineToAdd))
-                {
-                    continue;
-                }
-                htmlBuilder.AppendLine(lineToAdd);
+            }
+            finally
+            {
+                htmlBuilder.AppendLine("</div>");
             }
 
             // Append analysis markdown

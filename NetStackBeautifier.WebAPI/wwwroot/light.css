@@ -12,7 +12,7 @@ body {
 }
 
 #brand-area #project-info a {
-    color:#333333;
+    color: #333333;
 }
 
 .page-container .container #adbg {
@@ -76,12 +76,17 @@ textarea::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
-code {
-    border: 1px solid #336B87;
-    background-color: #e8f0ff;
+.analysis-markdown-container {
+    border-color: #f7e26a;
+    background-color: #fffedd;
 }
 
-.result {
+.analysis-markdown-container code {
+    border: 1px solid #e0b700;
+    background-color: #fffde8;
+}
+
+.frame-lines {
     border: #336B87 solid 1px;
     background-color: #f0f0f0;
 }
@@ -102,7 +107,7 @@ code {
     color: #2271B1;
 }
 
-.frame-method-generic-parameters{
+.frame-method-generic-parameters {
     color: #5f4100;
 }
 

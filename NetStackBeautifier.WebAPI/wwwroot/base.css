@@ -90,7 +90,7 @@
     font-size: 24px;
 }
 
-.description-line{
+.description-line {
     font-size: 14px;
     font-style: italic;
     font-weight: 100;
@@ -197,13 +197,6 @@ button[disabled] {
     border-left: 0px;
 }
 
-.analysis-markdown-container {
-    margin-bottom: 8px;
-    padding-bottom: 8px;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-}
-
 code {
     padding: 1px 1px 1px 1px;
     margin: 0 1px 0 1px;
@@ -211,14 +204,32 @@ code {
 
 /* result */
 .result {
-    width: 100%;
     margin-top: 24px;
+}
+
+/* Optionally markdown space for analysis */
+.analysis-markdown-container {
+    margin-bottom: 8px;
+    padding: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+}
+
+/* Space for all frame content */
+.frame-content {
+    margin-top: 24px;
+}
+
+/* Boxed space for frame lines */
+.frame-lines {
     padding: 16px;
     border-radius: 6px;
     overflow-x: auto;
     overflow-y: auto;
 }
 
+/* For each frame line */
 .frame-line-container {
     white-space: nowrap;
 }

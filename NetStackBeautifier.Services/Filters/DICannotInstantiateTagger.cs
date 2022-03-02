@@ -34,7 +34,7 @@ internal class DICannotInstantiateTagger : IFrameFilter<SimpleExceptionStackBeau
         }
         else
         {
-            markdown += $" `{implementType}` looks like class. Maybe, is it an **abstract class**?";
+            markdown += $" Although `{implementType}` looks like class, is it possible it is an **abstract class** or even **an interface**?";
         }
 
         frameline.Tags.TryAdd("AnalysisMarkDown", markdown);

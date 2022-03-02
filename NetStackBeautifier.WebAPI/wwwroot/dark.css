@@ -12,7 +12,7 @@ body {
 }
 
 #brand-area #project-info a {
-    color:#dddddd
+    color: #dddddd
 }
 
 .page-container .container #adbg {
@@ -76,16 +76,16 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .analysis-markdown-container {
-    /* border-bottom: 1px solid #ff0000; */
-    border-bottom-color: rgb(187, 187, 187);
+    border-color: #746c00;
+    background-color: #332e00;
 }
 
-code {
-    border: 1px solid #336B87;
+.analysis-markdown-container code {
+    border: 1px solid #746c00;
     background-color: #252525;
 }
 
-.result {
+.frame-lines {
     border: #336B87 solid 1px;
     background-color: #161616;
 }
