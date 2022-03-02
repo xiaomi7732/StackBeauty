@@ -9,7 +9,7 @@ This is going to be a service, taking in a chuck of text, understand the type of
 
 ## Live site
 
-[Stack Beauty](http://stackbeauty.codewithsaar.net/)
+[Stack Beauty @ stack.codewithsaar.net 🔗](https://stack.codewithsaar.net/)
 
 ## Challenge
 
