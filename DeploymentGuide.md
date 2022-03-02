@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="1.0.0-beta6"
+$RELEASE_VERSION="1.0.0-beta7"
 ```
 
   * RG related
@@ -57,11 +57,6 @@ $RELEASE_VERSION="1.0.0-beta6"
 //TODO: TBD
 
 * Add application insights component
-
-```shell
-
-
-```
 
 ```shell
 az monitor app-insights component create --app $APP_INSIGHTS_NAME  `
