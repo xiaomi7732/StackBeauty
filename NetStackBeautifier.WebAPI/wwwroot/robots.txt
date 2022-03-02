@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /swagger/
+Disallow: /*.txt$
+Disallow: /*.css$
+Disallow: /*.js$
