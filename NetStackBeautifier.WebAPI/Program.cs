@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(policy =>
 {
-    policy.WithOrigins("https://xiaomi7732.github.io")
+    policy.WithOrigins("https://stack.codewithsaar.net")
     .AllowAnyHeader()
     .AllowAnyMethod();
 }));

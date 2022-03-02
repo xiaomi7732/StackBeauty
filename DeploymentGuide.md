@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="1.0.0-beta7"
+$RELEASE_VERSION="1.0.0-beta8"
 ```
 
   * RG related
