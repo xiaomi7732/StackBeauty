@@ -9,9 +9,9 @@ internal class DICannotInstantiateTagger : IFrameFilter<SimpleExceptionStackBeau
     // Matches Cannot instantiate implementation type 'NetStackBeautifier.Services.BeautifierService' for service type 'NetStackBeautifier.Services.IBeautifierService'.
     private const string MatchExp = @"Cannot instantiate implementation type '(.*?)' for service type '(.*?)'";
     private static Regex _match = new Regex(MatchExp, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
     public void Filter(IFrameLine frameline)
     {
-
         if (frameline is not FrameRawText rawText)
         {
             return;
@@ -27,14 +27,14 @@ internal class DICannotInstantiateTagger : IFrameFilter<SimpleExceptionStackBeau
         string serviceType = match.Groups[2].Value.Split('.', StringSplitOptions.RemoveEmptyEntries).Last();
         bool impTypeInterface = implementType.StartsWith('I');
 
-        string markdown = $"It looks like the DI container is trying to get an instance for `{serviceType}`. However, it cannot create an instance of `{implementType}`.";
+        string markdown = $"It looks like the DI container is trying to get an instance for `{serviceType}`. However, it cannot create an object of `{implementType}`.";
         if (impTypeInterface)
         {
             markdown += $" `{implementType}` looks like **an interface**. Is it registered as **an implementation type** by accident?";
         }
         else
         {
-            markdown += $" Although `{implementType}` looks like class, is it possible it is an **abstract class** or even **an interface**?";
+            markdown += $" by name, `{implementType}` does look like a class, is it possible it is an **abstract class** or, by chance, is it **an interface**?";
         }
 
         frameline.Tags.TryAdd("AnalysisMarkDown", markdown);

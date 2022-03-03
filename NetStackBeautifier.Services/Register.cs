@@ -11,23 +11,29 @@ namespace NetStackBeautifier.Services
     {
         public static IServiceCollection RegisterExceptionBeautifier(this IServiceCollection services)
         {
+            // Register fundamentals
             services.TryAddScoped<LineBreaker>();
             services.TryAddSingleton<FrameClassNameFactory>(p => FrameClassNameFactory.Instance);
-            services.AddScoped<IBeautifier, AIProfilerStackBeautifier>();
-            services.AddScoped<IBeautifier, SimpleExceptionStackBeautifier>();
-            services.AddScoped<IBeautifier, AzureProfilerStackBeautifier>();
-
-            services.AddScoped(typeof(ILineBeautifier<>), typeof(MethodNameNewLineRemover<>));
-            services.AddScoped<ILineBeautifier<AzureProfilerStackBeautifier>, ClassNameTickNumberRemover<AzureProfilerStackBeautifier>>();
-            services.AddScoped(typeof(ILineBeautifier<>), typeof(GenericMethodBeautifier<>));
-            services.AddScoped(typeof(ILineBeautifier<>), typeof(ClassGenericTypeSystemCanonicalBeautifier<>));
-            services.AddScoped(typeof(ILineBeautifier<>), typeof(Int32ParameterFiller<>));
-            services.AddScoped(typeof(ILineBeautifier<>),typeof(MoveNextBeautifier<>));
-            services.AddScoped<IBeautifier, DumbBeautifier>();
             services.TryAddScoped<IBeautifierService, BeautifierService>();
 
-            services.TryAddScoped(typeof(IFrameFilter<>), typeof(NoiseFilter<>));
-            services.TryAddScoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotInstantiateTagger>();
+            // Register Parsers
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<IBeautifier, AIProfilerStackBeautifier>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<IBeautifier, SimpleExceptionStackBeautifier>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<IBeautifier, AzureProfilerStackBeautifier>());
+
+            // Register Beautifiers
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(MethodNameNewLineRemover<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<ILineBeautifier<AzureProfilerStackBeautifier>, ClassNameTickNumberRemover<AzureProfilerStackBeautifier>>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(GenericMethodBeautifier<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(ClassGenericTypeSystemCanonicalBeautifier<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(Int32ParameterFiller<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(MoveNextBeautifier<>)));
+
+            // Register Filters
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(IFrameFilter<>), typeof(NoiseFilter<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotInstantiateTagger>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotFindDepTagger>());
+
             return services;
         }
     }
