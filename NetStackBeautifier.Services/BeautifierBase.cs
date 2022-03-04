@@ -10,7 +10,7 @@ namespace NetStackBeautifier.Services
         private readonly LineBreaker _lineBreaker;
         private readonly IEnumerable<ILineBeautifier<T>> _lineBeautifiers;
         private readonly IEnumerable<IFrameFilter<T>> _filters;
-         private readonly IEnumerable<IPreFilter<T>> _preFilters;
+        private readonly IEnumerable<IPreFilter<T>> _preFilters;
 
         public BeautifierBase(
             LineBreaker lineBreaker,
@@ -28,14 +28,13 @@ namespace NetStackBeautifier.Services
             string input,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            int lineIndex = 0;
-            foreach (string line in _lineBreaker.BreakIntoLines(input))
+            foreach (var lineInfo in _lineBreaker.BreakIntoLines(input).Select((value, i) => (i, value)))
             {
+                (int index, string line) = lineInfo;
                 // TODO: Revisit the logic to form hierarchy.
                 IFrameLine newItem = CreateFrameItem(line);
-                RunPreFilters(newItem, line, lineIndex);
-                lineIndex += 1;
-                
+                RunPreFilters(newItem, line, index);
+
                 yield return await BeautifyAsync(newItem, cancellationToken).ConfigureAwait(false);
             }
         }
@@ -60,7 +59,7 @@ namespace NetStackBeautifier.Services
 
         private void RunPreFilters(IFrameLine input, string line, int index)
         {
-            foreach(IPreFilter<T> filter in _preFilters)
+            foreach (IPreFilter<T> filter in _preFilters)
             {
                 filter.Filter(input, line, index);
             }
