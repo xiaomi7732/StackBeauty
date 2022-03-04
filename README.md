@@ -5,7 +5,7 @@ And we shall try to make a change there.
 
 ## Vision
 
-This is going to be a service, taking in a chuck of text, understand the type of the call stack, beautify it and then return.
+This is a service, taking in a chuck of text, understand the sementic of it and beautify it!
 
 ## Live site
 
