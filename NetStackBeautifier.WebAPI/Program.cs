@@ -21,7 +21,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(policy =>
 {
-    string[] origins = {"https://stack.codewithsaar.net", "https://*.portal.azure.com", "https://ms.portal.azure.com", "https://portal.azure.com" };
+    string[] origins = {
+        "https://stack.codewithsaar.net",
+        "https://ms.portal.azure.com",
+        "https://portal.azure.com"
+    };
+
     policy.WithOrigins(origins)
     .AllowAnyHeader()
     .AllowAnyMethod();
