@@ -27,6 +27,7 @@ namespace NetStackBeautifier.Services
             services.TryAddScoped<IBeautifierService, BeautifierService>();
 
             services.TryAddScoped(typeof(IFrameFilter<>), typeof(NoiseFilter<>));
+            services.TryAddScoped(typeof(IPreFilter<>), typeof(RetainedFilter<>));
             services.TryAddScoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotInstantiateTagger>();
             return services;
         }
