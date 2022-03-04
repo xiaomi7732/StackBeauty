@@ -22,8 +22,9 @@ internal class AzureProfilerStackBeautifier : BeautifierBase<AzureProfilerStackB
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AzureProfilerStackBeautifier>> lineBeautifiers,
         IEnumerable<IFrameFilter<AzureProfilerStackBeautifier>> filters,
+        IEnumerable<IPreFilter<AzureProfilerStackBeautifier>> preFilters,
         FrameClassNameFactory frameClassNameFactory
-        ) : base(lineBreaker, lineBeautifiers, filters)
+        ) : base(lineBreaker, lineBeautifiers, filters, preFilters)
     {
         _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));

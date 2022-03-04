@@ -30,6 +30,7 @@ namespace NetStackBeautifier.Services
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(MoveNextBeautifier<>)));
 
             // Register Filters
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(IPreFilter<>), typeof(RetainedFilter<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(IFrameFilter<>), typeof(NoiseFilter<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotInstantiateTagger>());
             services.TryAddEnumerable(ServiceDescriptor.Scoped<IFrameFilter<SimpleExceptionStackBeautifier>, DICannotFindDepTagger>());

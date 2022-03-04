@@ -41,8 +41,9 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AIProfilerStackBeautifier>> lineBeautifiers,
         IEnumerable<IFrameFilter<AIProfilerStackBeautifier>> filters,
+        IEnumerable<IPreFilter<AIProfilerStackBeautifier>> preFilters,
         FrameClassNameFactory frameClassNameFactory)
-        : base(lineBreaker, lineBeautifiers, filters)
+        : base(lineBreaker, lineBeautifiers, filters, preFilters)
     {
         _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));

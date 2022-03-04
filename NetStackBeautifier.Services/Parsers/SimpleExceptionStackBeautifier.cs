@@ -54,8 +54,9 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<SimpleExceptionStackBeautifier>> lineBeautifiers,
         IEnumerable<IFrameFilter<SimpleExceptionStackBeautifier>> filters,
+        IEnumerable<IPreFilter<SimpleExceptionStackBeautifier>> preFilters,
         FrameClassNameFactory frameClassNameFactory)
-            : base(lineBreaker, lineBeautifiers, filters)
+            : base(lineBreaker, lineBeautifiers, filters, preFilters)
     {
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));
     }
