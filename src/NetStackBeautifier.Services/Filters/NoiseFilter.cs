@@ -31,7 +31,7 @@ internal class NoiseFilter<T> : IFrameFilter<T>
 
             if (tagNoise)
             {
-                frameItem.Tags.TryAdd("Noise", "true");
+                frameItem.Tags.TryAdd("noise", "true");
             }
         }
     }

@@ -12,6 +12,8 @@ builder.Services.AddControllers(options =>
     options.InputFormatters.Insert(0, new TextMediaTypeFormatter());
 }).AddJsonOptions(option =>
 {
+    option.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    option.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
     option.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
     option.JsonSerializerOptions.Converters.Add(new FrameLineJsonConverter());
 });

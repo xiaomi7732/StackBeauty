@@ -5,8 +5,8 @@ namespace NetStackBeautifier.Core;
 
 public class FrameLineJsonConverter : JsonConverter<IFrameLine>
 {
-    private const string TypeDiscriminatorConstant = "TypeDiscriminator";
-    private const string ValuePropertyName = "TypeValue";
+    private const string TypeDiscriminatorConstant = "typeDiscriminator";
+    private const string ValuePropertyName = "typeValue";
     private enum TypeDiscriminator
     {
         FrameRawText = 1,
@@ -63,15 +63,15 @@ public class FrameLineJsonConverter : JsonConverter<IFrameLine>
 
         if (value is FrameRawText frameRawText)
         {
-            writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.FrameRawText);
+            writer.WriteNumber(TypeDiscriminatorConstant, (int)TypeDiscriminator.FrameRawText);
             writer.WritePropertyName(ValuePropertyName);
-            JsonSerializer.Serialize(writer, frameRawText);
+            JsonSerializer.Serialize(writer, frameRawText, options);
         }
         else if (value is FrameItem frameItem)
         {
-            writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.FrameItem);
+            writer.WriteNumber(TypeDiscriminatorConstant, (int)TypeDiscriminator.FrameItem);
             writer.WritePropertyName(ValuePropertyName);
-            JsonSerializer.Serialize(writer, frameItem);
+            JsonSerializer.Serialize(writer, frameItem, options);
         }
         else
         {
