@@ -76,7 +76,7 @@ public class HtmlSectionRender : IRender<string>
     private string RenderLine(FrameItem frameItem, RenderOptions renderOptions)
     {
         // When this line is recognized as noise and the render mode is simple, skip this line by returning string.Empty;
-        if (frameItem.Tags.Contains(new KeyValuePair<string, string>("Noise", "true")) && renderOptions.Mode == RenderMode.Simple)
+        if (frameItem.Tags.Contains(new KeyValuePair<string, string>("noise", "true")) && renderOptions.Mode == RenderMode.Simple)
         {
             return string.Empty;
         }

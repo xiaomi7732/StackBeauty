@@ -9,7 +9,7 @@ internal class RetainedFilter<T> : IPreFilter<T>
         {
             return;
         }
-        frameLine.Tags.TryAdd("FullLine", fullLine);
-        frameLine.Tags.Add("StartingIndex", startingIndex.ToString());
+        frameLine.Tags.TryAdd("fullLine", fullLine);
+        frameLine.Tags.Add("startingIndex", startingIndex.ToString());
     }
 }
