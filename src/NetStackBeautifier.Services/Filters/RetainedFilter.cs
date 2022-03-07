@@ -5,7 +5,7 @@ internal class RetainedFilter<T> : IPreFilter<T>
 {
     public void Filter(IFrameLine frameLine, RawRequest rawRequest)
     {
-        if (frameLine == null || rawRequest == null)
+        if (frameLine is null || rawRequest is null)
         {
             return;
         }

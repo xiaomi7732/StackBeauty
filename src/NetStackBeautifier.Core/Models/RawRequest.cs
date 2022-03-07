@@ -7,7 +7,7 @@ namespace NetStackBeautifier.Services
             Value = value;
             Index = index;
         }
-        public int Index { get; private set; }
-        public string Value { get; private set; }
+        public int Index { get; }
+        public string Value { get; }
     }
 }
