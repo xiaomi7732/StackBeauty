@@ -28,7 +28,7 @@ namespace NetStackBeautifier.Services
             string input,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            foreach (var rawRequest in _lineBreaker.BreakIntoLines(input).Select((value, i) => new RawRequest(value, i)))
+            foreach (RawRequest rawRequest in _lineBreaker.BreakIntoLines(input).Select((value, i) => new RawRequest(value, i)))
             {
                 // TODO: Revisit the logic to form hierarchy.
                 IFrameLine newItem = CreateFrameItem(rawRequest.Value);
