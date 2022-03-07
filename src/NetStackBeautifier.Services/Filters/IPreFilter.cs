@@ -5,5 +5,5 @@ public interface IPreFilter<T>
     /// <summary>
     /// Adding tags to an IFrameLine with pre-processed information
     /// </summary>
-    void Filter(IFrameLine frameline, string line, int index);
+    void Filter(IFrameLine frameline, RawRequest rawRequest);
 }
