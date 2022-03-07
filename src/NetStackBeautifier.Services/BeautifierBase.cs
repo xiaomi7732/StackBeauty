@@ -28,12 +28,11 @@ namespace NetStackBeautifier.Services
             string input,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            foreach (var lineInfo in _lineBreaker.BreakIntoLines(input).Select((value, i) => (i, value)))
+            foreach (RawRequest rawRequest in _lineBreaker.BreakIntoLines(input).Select((value, i) => new RawRequest(value, i)))
             {
-                (int index, string line) = lineInfo;
                 // TODO: Revisit the logic to form hierarchy.
-                IFrameLine newItem = CreateFrameItem(line);
-                RunPreFilters(newItem, line, index);
+                IFrameLine newItem = CreateFrameItem(rawRequest.Value);
+                RunPreFilters(newItem, rawRequest);
 
                 yield return await BeautifyAsync(newItem, cancellationToken).ConfigureAwait(false);
             }
@@ -57,11 +56,11 @@ namespace NetStackBeautifier.Services
             return input;
         }
 
-        private void RunPreFilters(IFrameLine input, string line, int index)
+        private void RunPreFilters(IFrameLine input, RawRequest rawRequest)
         {
             foreach (IPreFilter<T> filter in _preFilters)
             {
-                filter.Filter(input, line, index);
+                filter.Filter(input, rawRequest);
             }
         }
 

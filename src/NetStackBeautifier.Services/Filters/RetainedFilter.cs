@@ -3,13 +3,13 @@ namespace NetStackBeautifier.Services.Filters;
 internal class RetainedFilter<T> : IPreFilter<T>
     where T : IBeautifier
 {
-    public void Filter(IFrameLine frameLine, string fullLine, int startingIndex)
+    public void Filter(IFrameLine frameLine, RawRequest rawRequest)
     {
-        if (frameLine == null)
+        if (frameLine is null || rawRequest is null)
         {
             return;
         }
-        frameLine.Tags.TryAdd("fullLine", fullLine);
-        frameLine.Tags.Add("startingIndex", startingIndex.ToString());
+        frameLine.Tags.TryAdd("fullLine", rawRequest.Value.Trim());
+        frameLine.Tags.Add("startingIndex", rawRequest.Index.ToString());
     }
 }
