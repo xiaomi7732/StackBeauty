@@ -25,6 +25,7 @@ namespace NetStackBeautifier.Services
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(MethodNameNewLineRemover<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped<ILineBeautifier<AzureProfilerStackBeautifier>, ClassNameTickNumberRemover<AzureProfilerStackBeautifier>>());
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(GenericMethodBeautifier<>)));
+            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(LambdaMethodBeautifier<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(ClassGenericTypeSystemCanonicalBeautifier<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(Int32ParameterFiller<>)));
             services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(ILineBeautifier<>), typeof(MoveNextBeautifier<>)));
