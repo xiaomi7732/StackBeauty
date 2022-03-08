@@ -9,6 +9,10 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
     private readonly LineBreaker _lineBreaker;
     private readonly FrameClassNameFactory _frameClassNameFactory;
 
+    // AI Profiler stack beautifier
+    private const string CanBeautifyMatcher = @".*?!.*?\(.*\)";
+    private static readonly Regex _canBeautifyMatcher = new Regex(CanBeautifyMatcher, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
     // Break a line into 2 parts, get the entry and the rest. For example:
     // clr!SlowAllocateString(!!0x1) will be break into:
     // Group[1]:Entry:clr, Group[2]:Rest:SlowAllocateString(!!0x1).
@@ -36,7 +40,6 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
     private const string ManagedSignatureMatcher = @"^(.*)\.(.*)?\((.*)\)$";
     private static readonly Regex _managedSigMatcher = new Regex(ManagedSignatureMatcher, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
-
     public AIProfilerStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AIProfilerStackBeautifier>> lineBeautifiers,
@@ -54,18 +57,25 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
         foreach (string line in _lineBreaker.BreakIntoLines(input))
         {
             // If there's any of these, it is AI Stack
-            if (line.StartsWith("clr!", StringComparison.OrdinalIgnoreCase)
+            if (line.StartsWith("anonymously hosted dynamicmethods assembly!", StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith("clr!", StringComparison.OrdinalIgnoreCase)
                 || line.StartsWith("mscorlib.ni!", StringComparison.OrdinalIgnoreCase)
-                || line.StartsWith("system.core.ni!", StringComparison.OrdinalIgnoreCase)
-                || line.StartsWith("anonymously hosted dynamicmethods assembly!", StringComparison.OrdinalIgnoreCase)
-                || line.StartsWith("system.web.http!", StringComparison.OrdinalIgnoreCase)
                 || line.StartsWith("mscorlib!", StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith("newtonsoft.json!", StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith("system.core.ni!", StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith("system.web.http!", StringComparison.OrdinalIgnoreCase)
             )
             {
                 return true;
             }
+
+            if (!_canBeautifyMatcher.Match(line).Success)
+            {
+                return false;
+            }
         }
-        return false;
+        // When every line passes check for canBeautify matcher, it is good to in shape.
+        return true;
     }
 
     protected override IFrameLine CreateFrameItem(string line)
