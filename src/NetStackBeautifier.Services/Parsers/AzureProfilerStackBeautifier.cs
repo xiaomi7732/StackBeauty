@@ -17,17 +17,20 @@ internal class AzureProfilerStackBeautifier : BeautifierBase<AzureProfilerStackB
 
     private readonly LineBreaker _lineBreaker;
     private readonly FrameClassNameFactory _frameClassNameFactory;
+    private readonly AzureProfilerStackLineCreator _lineCreator;
 
     public AzureProfilerStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AzureProfilerStackBeautifier>> lineBeautifiers,
         IEnumerable<IFrameFilter<AzureProfilerStackBeautifier>> filters,
         IEnumerable<IPreFilter<AzureProfilerStackBeautifier>> preFilters,
-        FrameClassNameFactory frameClassNameFactory
+        FrameClassNameFactory frameClassNameFactory,
+        AzureProfilerStackLineCreator lineCreator
         ) : base(lineBreaker, lineBeautifiers, filters, preFilters)
     {
         _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));
+        _lineCreator = lineCreator ?? throw new ArgumentNullException(nameof(lineCreator));
     }
 
     public override bool CanBeautify(string input)
@@ -71,21 +74,5 @@ internal class AzureProfilerStackBeautifier : BeautifierBase<AzureProfilerStackB
         };
     }
 
-    private IFrameLine CreateNormalLine(string line)
-    {
-        // Assumption is that ! always exists.
-        string[] tokens = line.Split('!', StringSplitOptions.RemoveEmptyEntries);
-        if (tokens.Length != 2)
-        {
-            throw new InvalidCastException($"Unexpected token count. Expected 2, actual: {tokens.Length}. Content: {line}");
-        }
-        FrameFullClass fullClass = _frameClassNameFactory.FromString(tokens[0]);
-        FrameMethod method = new FrameMethod() { Name = tokens[1] };
-
-        return new FrameItem()
-        {
-            FullClass = fullClass,
-            Method = method,
-        };
-    }
+    private IFrameLine CreateNormalLine(string line) => _lineCreator.Create(_frameClassNameFactory, line);
 }
