@@ -18,6 +18,7 @@ public class UnitTest1
             new LineBreaker(), 
             Enumerable.Empty<ILineBeautifier<SimpleExceptionStackBeautifier>>(),
             Enumerable.Empty<IFrameFilter<SimpleExceptionStackBeautifier>>(),
+            Enumerable.Empty<IPreFilter<SimpleExceptionStackBeautifier>>(),
             FrameClassNameFactory.Instance);
 
         bool actual = target.CanBeautify(input);
