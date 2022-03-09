@@ -54,6 +54,11 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
 
     public override bool CanBeautify(string input)
     {
+        if (_canBeautifyMatcher.Match(input).Success)
+        {
+            return true;
+        }
+
         foreach (string line in _lineBreaker.BreakIntoLines(input))
         {
             // If there's any of these, it is AI Stack
@@ -68,14 +73,9 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
             {
                 return true;
             }
-
-            if (!_canBeautifyMatcher.Match(line).Success)
-            {
-                return false;
-            }
         }
-        // When every line passes check for canBeautify matcher, it is good to in shape.
-        return true;
+
+        return false;
     }
 
     protected override IFrameLine CreateFrameItem(string line)
