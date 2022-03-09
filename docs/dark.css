@@ -129,3 +129,7 @@ textarea::-webkit-scrollbar-thumb {
 .frame-parameter-name {
     color: #ade8f4;
 }
+
+.frame-method-body-holder {
+    color:#464646;
+}

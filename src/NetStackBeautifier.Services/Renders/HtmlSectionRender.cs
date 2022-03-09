@@ -87,7 +87,7 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return $@"<div class='frame-line-container'>
-<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} || Tracking Id:{HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}<span>&nbsp;{{ ... }}</span>
+<span class='frame-class-name' title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} || Tracking Id:{HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes)}.<span class='frame-method-name'>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly())}{RenderBodyHolder()}
 {Render(frameItem.FileInfo)}
 </div>";
     }
@@ -145,5 +145,10 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return $"<span class='frame-file-path'>&nbsp;&nbsp;&nbsp;&nbsp;{HttpUtility.HtmlEncode(fileInfo.FilePath)}</span>#<span class='frame-file-line'>{HttpUtility.HtmlEncode(fileInfo.LineNumber)}</span>";
+    }
+
+    private string RenderBodyHolder()
+    {
+        return $"<span class='frame-method-body-holder'>{{ .. }}</span>";
     }
 }

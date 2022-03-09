@@ -242,6 +242,10 @@ code {
     font-weight: bold;
 }
 
+.frame-method-body-holder {
+    margin-left: 4px;
+}
+
 /* Smaller screen */
 @media screen and (min-width: 0px) and (max-width: 999px) {
     #adbg {
