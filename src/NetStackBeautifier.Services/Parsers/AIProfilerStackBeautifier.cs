@@ -71,7 +71,7 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
 
             if (!_canBeautifyMatcher.Match(line).Success)
             {
-                return false;
+                break;
             }
         }
         // When every line passes check for canBeautify matcher, it is good to in shape.
