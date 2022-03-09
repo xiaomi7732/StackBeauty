@@ -25,4 +25,8 @@
     <ProjectReference Include="..\NetStackBeautifier.Services\NetStackBeautifier.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="./*.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
