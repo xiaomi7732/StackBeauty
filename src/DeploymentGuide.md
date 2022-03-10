@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="20220308.03"
+$RELEASE_VERSION="20220310.02"
 ```
 
   * RG related
@@ -51,6 +51,32 @@ $RELEASE_VERSION="20220308.03"
     --image "$REPO_IMAGE_TAG" `
     --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
   ```
+## Shorthands for quick deployment
+
+This repeats the steps above. Just putting together for easy copy/execution. Remember to update the release version!
+
+```shell
+$RELEASE_VERSION="20220310.02"
+$APP_NAME="stackbeauty"
+$LOCATION="eastus2"
+$ENVIRONMENT="dev"
+$RESOURCE_GROUP="$APP_NAME-$LOCATION-$ENVIRONMENT"
+$LOCAL_IMAGE_TAG="$APP_NAME"
+$REPO_IMAGE_NAME="saarsdevhub.azurecr.io/spdevapps/$APP_NAME"
+$REPO_IMAGE_TAG="$REPO_IMAGE_NAME`:$RELEASE_VERSION"
+$CONTAINER_APP_NAME="$APP_NAME-$ENVIRONMENT"
+$LOG_ANALYTICS_WORKSPACE="stackbeauty-$LOCATION-logs"
+$APP_INSIGHTS_NAME="$APP_NAME-insights-$ENVIRONMENT"
+dotnet clean -c Release -o .\app\ .\NetStackBeautifier.WebAPI\
+dotnet publish -c Release -o .\app\ .\NetStackBeautifier.WebAPI\
+docker build . -t $LOCAL_IMAGE_TAG
+docker tag stackbeauty:latest $REPO_IMAGE_TAG
+docker push $REPO_IMAGE_TAG
+az containerapp update -n $CONTAINER_APP_NAME `
+    -g $RESOURCE_GROUP `
+    --image "$REPO_IMAGE_TAG" `
+    --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
+```
 
 ## New deployment
 
