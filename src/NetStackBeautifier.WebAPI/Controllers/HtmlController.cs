@@ -16,11 +16,16 @@ public class HtmlController
     }
 
     [HttpPost]
-    public async Task<ContentResult> Render([FromBody] IReadOnlyCollection<IFrameLine> frames, [FromQuery] RenderMode renderMode = RenderMode.Simple, CancellationToken cancellationToken = default)
+    public async Task<ContentResult> Render(
+        [FromBody] IReadOnlyCollection<IFrameLine> frames,
+        [FromQuery] RenderMode renderMode = RenderMode.Simple,
+        [FromQuery] bool preStyled = false,
+        CancellationToken cancellationToken = default)
     {
         RenderOptions renderOptions = new RenderOptions
         {
             Mode = renderMode,
+            PreStyled = preStyled
         };
         return new ContentResult()
         {
