@@ -42,35 +42,6 @@ public class HtmlRender : IRender<string>
         font-size: 14px;
         line-height: 1.5em;
     }
-
-    .description-text {
-    }
-
-    .frame-class-name {
-        color: #996800;
-    }
-
-    .frame-method-name {
-        font-weight: bold;
-        color: #2271B1;
-    }
-
-    .frame-parameter-list {
-        color: #362400;
-    }
-
-    .frame-file-path {
-        color: #336B87;
-    }
-
-    .frame-file-line {
-        color: #D63638;
-    }
-
-    .frame-parameter-type {
-        color: #043959 ;
-        font-weight: bold;
-    }
 </style>");
             }
             finally
@@ -95,6 +66,4 @@ public class HtmlRender : IRender<string>
 
         return htmlBuilder.ToString();
     }
-
-
 }
