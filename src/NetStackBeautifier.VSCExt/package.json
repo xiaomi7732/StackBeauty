@@ -11,7 +11,8 @@
     ],
     "activationEvents": [
         "onCommand:stackbeauty.helloWorld",
-        "onCommand:stackbeauty.showDateTime"
+        "onCommand:stackbeauty.showDateTime",
+        "onCommand:stackbeauty.showBeautified"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -23,6 +24,10 @@
             {
                 "title": "Show DateTime",
                 "command": "stackbeauty.showDateTime"
+            },
+            {
+                "title": "Beautify",
+                "command": "stackbeauty.showBeautified"
             }
         ]
     },
