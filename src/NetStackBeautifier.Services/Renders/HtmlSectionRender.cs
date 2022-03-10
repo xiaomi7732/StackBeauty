@@ -159,7 +159,7 @@ public class HtmlSectionRender : IRender<string>
         }
         line = HttpUtility.HtmlEncode("<" + line.Substring(0, line.Length - ", ".Length) + ">");
 
-        return $"<span>{GenerateAttributes(className, isDefault)}{line}</span>";
+        return $"<span{GenerateAttributes(className, isDefault)}>{line}</span>";
     }
 
     private string RenderParameterList(IReadOnlyCollection<FrameParameter> parameters, bool isDefault)
