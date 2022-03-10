@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetStackBeautifier.Core;
 using NetStackBeautifier.Services;
 using NetStackBeautifier.Services.Renders;
+using NetStackBeautifier.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHealthChecks();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddControllers(options =>
 {
@@ -52,6 +55,12 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResponseWriter = HealthCheckJsonWriter.WriteResponse,
+});
 
 //Setting the Default Files
 app.UseDefaultFiles(new DefaultFilesOptions()
