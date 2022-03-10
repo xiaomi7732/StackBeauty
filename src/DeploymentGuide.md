@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="20220308.03"
+$RELEASE_VERSION="20220310.01"
 ```
 
   * RG related
