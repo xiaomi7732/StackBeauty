@@ -10,6 +10,6 @@ internal class RetainedFilter<T> : IPreFilter<T>
             return;
         }
         frameLine.Tags.TryAdd(KnownTagKeys.FullLine, rawRequest.Value.Trim());
-        frameLine.Tags.Add("startingIndex", rawRequest.Index.ToString());
+        frameLine.Tags.Add(KnownTagKeys.StartingIndex, rawRequest.Index.ToString());
     }
 }
