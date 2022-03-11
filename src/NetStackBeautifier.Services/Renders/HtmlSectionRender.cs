@@ -93,7 +93,7 @@ public class HtmlSectionRender : IRender<string>
     /// <summary>
     /// Skips lines that is noise when rendering in simple mode.
     /// </summary>
-    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>("noise", "true")) && renderOptions.Mode == RenderMode.Simple;
+    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>(KnownTagKeys.Noise, "true")) && renderOptions.Mode == RenderMode.Simple;
 
     private string RenderLine(FrameRawText rawText)
     {
