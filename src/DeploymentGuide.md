@@ -5,7 +5,7 @@
 * Setup Context
 
 ```shell
-$RELEASE_VERSION="20220310.02"
+$RELEASE_VERSION="" # Fill in the value!
 ```
 
   * RG related
@@ -56,7 +56,7 @@ $RELEASE_VERSION="20220310.02"
 This repeats the steps above. Just putting together for easy copy/execution. Remember to update the release version!
 
 ```shell
-$RELEASE_VERSION="20220310.02"
+$RELEASE_VERSION="20220310.03"
 $APP_NAME="stackbeauty"
 $LOCATION="eastus2"
 $ENVIRONMENT="dev"
