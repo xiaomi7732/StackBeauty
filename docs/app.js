@@ -16,7 +16,9 @@ const btnExample1 = document.getElementById('btnExampleInput1');
 const btnExample2 = document.getElementById('btnExampleInput2');
 const btnExample3 = document.getElementById('btnExampleInput3');
 const btnExample4 = document.getElementById('btnExampleInput4');
-const btnExamples = [btnExample1, btnExample2, btnExample3, btnExample4];
+const btnExample5 = document.getElementById('btnExampleInput5');
+
+const btnExamples = [btnExample1, btnExample2, btnExample3, btnExample4, btnExample5];
 
 const onThemeChanged = (ev) => {
     const themeFileName = ev.target.value + ".css";

@@ -1,6 +1,5 @@
 using System.Text;
 using System.Web;
-using System.Collections.Generic;
 using NetStackBeautifier.Core;
 using Markdig;
 
@@ -8,7 +7,6 @@ namespace NetStackBeautifier.Services.Renders;
 
 public class HtmlSectionRender : IRender<string>
 {
-    private const string AnalysisMarkDownKey = "AnalysisMarkDown";
     private Dictionary<string, string> classToStyleMap;
 
     public HtmlSectionRender()
@@ -48,9 +46,9 @@ public class HtmlSectionRender : IRender<string>
                         continue;
                     }
 
-                    if (line.Tags.ContainsKey(AnalysisMarkDownKey))
+                    if (line.Tags.ContainsKey(KnownTagKey.AnalysisMarkDown))
                     {
-                        analysisMarkdown = line.Tags[AnalysisMarkDownKey];
+                        analysisMarkdown = line.Tags[KnownTagKey.AnalysisMarkDown];
                     }
 
                     string lineToAdd = line switch
@@ -95,7 +93,7 @@ public class HtmlSectionRender : IRender<string>
     /// <summary>
     /// Skips lines that is noise when rendering in simple mode.
     /// </summary>
-    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>("noise", "true")) && renderOptions.Mode == RenderMode.Simple;
+    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>(KnownTagKey.Noise, "true")) && renderOptions.Mode == RenderMode.Simple;
 
     private string RenderLine(FrameRawText rawText)
     {

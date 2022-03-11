@@ -29,7 +29,8 @@
     <div class="page-container">
         <div class="header">
             <div id="brand-area">
-                <div id="header-text"><a href="https://github.com/xiaomi7732/StackBeauty" target="_blank">Stack Beauty</a></div>
+                <div id="header-text"><a href="https://github.com/xiaomi7732/StackBeauty" target="_blank">Stack
+                        Beauty</a></div>
                 <div id="project-info"><a href="https://github.com/xiaomi7732/StackBeauty" target="_blank">
                         Open Source on GitHub &#128279;</a></div>
             </div>
@@ -46,7 +47,8 @@
         </div>
         <div class="container">
             <div class="tagline">Stack-reading easier</div>
-            <div class="description-line">Pretty print any stack trace and make stack reading easier. (Disclaimer: NOT a Microsoft Product)</div>
+            <div class="description-line">Pretty print any stack trace and make stack reading easier. (Disclaimer: NOT a
+                Microsoft Product)</div>
             <div id="adbg"></div>
             <div>1. Paste in the call stack (or choose from the examples below):</div>
             <div>
@@ -67,10 +69,16 @@
                     <button id="btnClearInput" disabled>Clear Input</button>
                 </div>
                 <div>
-                    <button id="btnExampleInput1" class="btnGroupFirst">Example1</button>
-                    <button id="btnExampleInput2" class="btnGroupMiddle">Example2</button>
-                    <button id="btnExampleInput3" class="btnGroupMiddle">Example3</button>
-                    <button id="btnExampleInput4" class="btnGroupLast">Example4</button>
+                    <button id="btnExampleInput1" title="Normal Exception Callstack"
+                        class="btnGroupFirst">Example1</button>
+                    <button id="btnExampleInput2" title="Callstack from AppInsights"
+                        class="btnGroupMiddle">Example2</button>
+                    <button id="btnExampleInput3" title="Callstack from AI Profiler"
+                        class="btnGroupMiddle">Example3</button>
+                    <button id="btnExampleInput4" title="Callstack from Azure Profiler"
+                        class="btnGroupMiddle">Example4</button>
+                    <button id="btnExampleInput5" title="Normal exception with suggestion"
+                        class="btnGroupLast">Example5</button>
                 </div>
             </div>
             <div id="result" class="result boxsizingBorder">

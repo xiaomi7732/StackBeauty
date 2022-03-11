@@ -56,7 +56,7 @@ public class AzureProfilerStackBeautifierNoSymbolTests
 
         Assert.Equal(new Dictionary<string, string>()
         {
-            ["noise"] = "true"
+            [KnownTagKey.Noise] = "true"
         }, carryOn!.Tags);
     }
 }
