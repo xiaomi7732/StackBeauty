@@ -28,8 +28,8 @@ There are various formats for call stack the user could get. And that shouldn't 
 
 ```mermaid
 graph LR
-    A[Input] --> |Pre-Filter| | D(IFrame created & tagged)
-    D -->|Parsers| B(IFrameLine collection)
+    A[Input] --> |Pre-Filter| G(IFrame created & tagged)
+    G -->|Parsers| B(IFrameLine collection)
     B -->|Beautifiers| C{Beautified IFrameLine collection}
     C -->|Html Render| D[Html]
     C -->|Text Render| E[Text]
