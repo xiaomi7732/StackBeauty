@@ -1,6 +1,5 @@
 using System.Text;
 using System.Web;
-using System.Collections.Generic;
 using NetStackBeautifier.Core;
 using Markdig;
 
@@ -8,7 +7,6 @@ namespace NetStackBeautifier.Services.Renders;
 
 public class HtmlSectionRender : IRender<string>
 {
-    private const string AnalysisMarkDownKey = "AnalysisMarkDown";
     private Dictionary<string, string> classToStyleMap;
 
     public HtmlSectionRender()
@@ -48,9 +46,9 @@ public class HtmlSectionRender : IRender<string>
                         continue;
                     }
 
-                    if (line.Tags.ContainsKey(AnalysisMarkDownKey))
+                    if (line.Tags.ContainsKey(KnownTagKeys.AnalysisMarkDown))
                     {
-                        analysisMarkdown = line.Tags[AnalysisMarkDownKey];
+                        analysisMarkdown = line.Tags[KnownTagKeys.AnalysisMarkDown];
                     }
 
                     string lineToAdd = line switch

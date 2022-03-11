@@ -37,6 +37,6 @@ internal class DICannotInstantiateTagger : IFrameFilter<SimpleExceptionStackBeau
             markdown += $" by name, `{implementType}` does look like a class, is it possible it is an **abstract class** or, by chance, is it **an interface**?";
         }
 
-        frameline.Tags.TryAdd("analysisMarkDown", markdown);
+        frameline.Tags.TryAdd(KnownTagKeys.AnalysisMarkDown, markdown);
     }
 }
