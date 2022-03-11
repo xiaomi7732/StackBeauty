@@ -42,16 +42,24 @@ public class HtmlSectionRender : IRender<string>
             {
                 foreach (IFrameLine line in data)
                 {
+                    // Skip noise
+                    if (SkipLine(line, renderOptions))
+                    {
+                        continue;
+                    }
+
                     if (line.Tags.ContainsKey(AnalysisMarkDownKey))
                     {
                         analysisMarkdown = line.Tags[AnalysisMarkDownKey];
                     }
+
                     string lineToAdd = line switch
                     {
                         FrameRawText rawText => RenderLine(rawText),
                         FrameItem item => RenderLine(item, renderOptions),
                         _ => throw new NotSupportedException(),
                     };
+
                     // Nothing to append when nothing returned.
                     if (string.IsNullOrEmpty(lineToAdd))
                     {
@@ -84,6 +92,11 @@ public class HtmlSectionRender : IRender<string>
         return $"<div class='analysis-markdown-container'>{Markdown.ToHtml(markdown)}</div>";
     }
 
+    /// <summary>
+    /// Skips lines that is noise when rendering in simple mode.
+    /// </summary>
+    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>("noise", "true")) && renderOptions.Mode == RenderMode.Simple;
+
     private string RenderLine(FrameRawText rawText)
     {
         return $"<div class='description-text'>{HttpUtility.HtmlEncode(rawText.Value)}</div>";
@@ -91,12 +104,6 @@ public class HtmlSectionRender : IRender<string>
 
     private string RenderLine(FrameItem frameItem, RenderOptions renderOptions)
     {
-        // When this line is recognized as noise and the render mode is simple, skip this line by returning string.Empty;
-        if (frameItem.Tags.Contains(new KeyValuePair<string, string>("noise", "true")) && renderOptions.Mode == RenderMode.Simple)
-        {
-            return string.Empty;
-        }
-
         if (frameItem.Method is null)
         {
             throw new ArgumentException("FrameItem.Method is required.");
