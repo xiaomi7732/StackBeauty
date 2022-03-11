@@ -110,6 +110,9 @@ async function getHtmlForWebview(context: vscode.ExtensionContext, inputText: st
         'method': 'post',
         'baseURL': backend,
         'url': htmlEndpoint,
+        'params': {
+            'preStyled': true
+        },
         'headers': { 'Content-Type': 'application/json' },
         'data': stackJson.data,
     });
