@@ -1,6 +1,6 @@
 namespace NetStackBeautifier.Services;
 
-internal static class KnownTagKeys
+internal static class KnownTagKey
 {
     public const string AnalysisMarkDown = "analysisMarkDown";
     public const string FullLine = "fullLine";

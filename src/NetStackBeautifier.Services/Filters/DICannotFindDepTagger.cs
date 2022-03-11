@@ -42,6 +42,6 @@ internal class DICannotFindDepTagger : IFrameFilter<SimpleExceptionStackBeautifi
         {
             markdown += $" The missing type of `{missingType}` looks like a class, do you intend to inject an interface of it in the constructor of `{targetType}` instead?";
         }
-        frameline.Tags.TryAdd(KnownTagKeys.AnalysisMarkDown, markdown);
+        frameline.Tags.TryAdd(KnownTagKey.AnalysisMarkDown, markdown);
     }
 }

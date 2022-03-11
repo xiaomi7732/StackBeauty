@@ -16,7 +16,7 @@ internal class NoiseFilter<T> : IFrameFilter<T>
 
         if (tagNoise)
         {
-            frameline.Tags.TryAdd(KnownTagKeys.Noise, "true");
+            frameline.Tags.TryAdd(KnownTagKey.Noise, "true");
         }
     }
 

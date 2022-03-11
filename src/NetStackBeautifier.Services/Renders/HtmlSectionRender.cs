@@ -46,9 +46,9 @@ public class HtmlSectionRender : IRender<string>
                         continue;
                     }
 
-                    if (line.Tags.ContainsKey(KnownTagKeys.AnalysisMarkDown))
+                    if (line.Tags.ContainsKey(KnownTagKey.AnalysisMarkDown))
                     {
-                        analysisMarkdown = line.Tags[KnownTagKeys.AnalysisMarkDown];
+                        analysisMarkdown = line.Tags[KnownTagKey.AnalysisMarkDown];
                     }
 
                     string lineToAdd = line switch
@@ -93,7 +93,7 @@ public class HtmlSectionRender : IRender<string>
     /// <summary>
     /// Skips lines that is noise when rendering in simple mode.
     /// </summary>
-    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>(KnownTagKeys.Noise, "true")) && renderOptions.Mode == RenderMode.Simple;
+    private bool SkipLine(IFrameLine line, RenderOptions renderOptions) => line.Tags.Contains(new KeyValuePair<string, string>(KnownTagKey.Noise, "true")) && renderOptions.Mode == RenderMode.Simple;
 
     private string RenderLine(FrameRawText rawText)
     {
