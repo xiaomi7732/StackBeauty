@@ -1,0 +1,32 @@
+name: BackendValidation
+
+env:
+  PROJECT_PATH: src/NetStackBeautifier.WebAPI
+  TEST_PROJECT_PATH: src/NetStackBeautifier.Services.Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.x
+    
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+    
+    - name: Build Backend
+      run: dotnet build --no-restore -c Release ${{ env.PROJECT_PATH }} 
+    
+    - name: Test
+      run: dotnet test --verbosity normal -c Release ${{ env.TEST_PROJECT_PATH }}
