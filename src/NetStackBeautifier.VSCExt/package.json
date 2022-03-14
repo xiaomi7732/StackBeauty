@@ -12,7 +12,8 @@
     "activationEvents": [
         "onCommand:stackbeauty.helloWorld",
         "onCommand:stackbeauty.showDateTime",
-        "onCommand:stackbeauty.showBeautified"
+        "onCommand:stackbeauty.showBeautified",
+        "onCommand: stackbeauty.showBeautifiedWebView"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -28,6 +29,29 @@
             {
                 "title": "Beautify",
                 "command": "stackbeauty.showBeautified"
+            },
+            {
+                "title": "Beautify - Webview",
+                "command": "stackbeauty.showBeautifiedWebView"
+            }
+        ],
+        "languages": [
+            {
+                "id": "callstack",
+                "extensions": [
+                    ".callstack"
+                ],
+                "aliases": [
+                    "callstack"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "callstack",
+                "scopeName": "source.callstack",
+                "path": "./syntaxes/callstack.tmLanguage.json"
             }
         ]
     },

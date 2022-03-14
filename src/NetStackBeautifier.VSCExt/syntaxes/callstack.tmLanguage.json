@@ -1,0 +1,17 @@
+{
+    "scopeName": "source.callstack",
+    "patterns": [{ "include": "#class" }, { "include": "#method" }],
+    "repository": {
+      "expression": {
+        "patterns": [ { "include": "#class" }]
+      },
+      "class": {
+        "match": "^([^.(?<!()]+)",
+        "name": "entity.name.type"
+      },
+      "method": {
+        "match": "^([^(]+)",
+        "name": "entity.name.function"
+      }
+    }
+  }

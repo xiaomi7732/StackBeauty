@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import axios from 'axios';
-import { StackDocumentProvider } from './stackDocumentProvider';
+import { createSyntaxHighlighting, StackDocumentProvider } from './stackDocumentProvider';
 
 interface IStackTreeParams {
     parameterName: string;
@@ -13,10 +13,10 @@ interface IStackTreeTypeValue {
     assemblySignature: string;
     fileInfo: string;
     fullClass?: {
-        nameSections: string[],
-        genericParameterTypes: string,
-        fullClassNameOrDefault: string,
-        shortClassNameOrDefault: string
+        nameSections: string[];
+        genericParameterTypes: string[];
+        fullClassNameOrDefault: string;
+        shortClassNameOrDefault: string;
     };
     id: string;
     method: {
@@ -36,30 +36,34 @@ export interface IStackTree {
 export function activate(context: vscode.ExtensionContext) {
     const stackScheme = 'callstack';
     const stackProvider = new StackDocumentProvider();
-
     const registerStackDocumentProvider = vscode.workspace.registerTextDocumentContentProvider(stackScheme, stackProvider);
-    let showDateTimeCommand = vscode.commands.registerCommand('stackbeauty.showDateTime', () => {
+    
+    const showDateTimeCommand = vscode.commands.registerCommand('stackbeauty.showDateTime', () => {
         vscode.window.showWarningMessage('Current datetime: ' + (new Date()).toISOString() + 'in theme: ' + vscode.window.activeColorTheme.kind);
         vscode.debug.activeDebugConsole.appendLine("Hello debug info");
     });
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('stackbeauty.helloWorld', () => {
+    const disposable = vscode.commands.registerCommand('stackbeauty.helloWorld', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
         vscode.window.showInformationMessage('Hello from StackBeauty!');
     });
 
-    let showBeautified = vscode.commands.registerCommand('stackbeauty.showBeautified', () => {
+    const showBeautified = vscode.commands.registerCommand('stackbeauty.showBeautified', () => {
         createBeautifiedDocument(context);
-        //createPanel(context);
+    });
+
+    const showBeautifiedWebView = vscode.commands.registerCommand('stackbeauty.showBeautifiedWebView', () => {
+        createPanel(context);
     });
 
     context.subscriptions.push(registerStackDocumentProvider);
     context.subscriptions.push(disposable);
     context.subscriptions.push(showDateTimeCommand);
     context.subscriptions.push(showBeautified);
+    context.subscriptions.push(showBeautifiedWebView);
 }
 
 async function createBeautifiedDocument(context: vscode.ExtensionContext) {
@@ -82,9 +86,11 @@ async function createBeautifiedDocument(context: vscode.ExtensionContext) {
 
     const stackJson = await getStackJson(selectedText);
     if (stackJson && stackJson.length) {
+        createSyntaxHighlighting(stackJson);
         const parsedStack = parseJsonStack(stackJson);
         const uri = vscode.Uri.parse(`callstack: ${parsedStack}`);
         const doc = await vscode.workspace.openTextDocument(uri);
+        vscode.languages.setTextDocumentLanguage(doc, 'callstack');
         await vscode.window.showTextDocument(doc, {
             preview: false,
             viewColumn: vscode.ViewColumn.Two
@@ -92,10 +98,11 @@ async function createBeautifiedDocument(context: vscode.ExtensionContext) {
     }
 }
 
+
+export const CLASS_DELIMITER = '.';
+export const STRING_SPACE = ' ';
+export const METHOD_BODY = '{ ... }';
 const parseJsonStack = (jsonStack: IStackTree[]) => jsonStack.map((line) => {
-        const CLASS_DELIMITER = '.';
-        const STRING_SPACE = ' ';
-        const METHOD_BODY = '{ ... }';
         const { method, fullClass } = line.typeValue;
         const endLineStringStack = [];
         if (line.typeDiscriminator === 1) {
@@ -103,7 +110,13 @@ const parseJsonStack = (jsonStack: IStackTree[]) => jsonStack.map((line) => {
         }
 
         if (fullClass) {
-            endLineStringStack.push(fullClass.shortClassNameOrDefault + CLASS_DELIMITER);
+            const { genericParameterTypes } = fullClass;
+            endLineStringStack.push(fullClass.shortClassNameOrDefault);
+            if (genericParameterTypes && genericParameterTypes.length) {
+                endLineStringStack.push(`<${genericParameterTypes.join(', ')}>${CLASS_DELIMITER}`);
+            } else {
+                endLineStringStack.push(CLASS_DELIMITER);
+            }
         }
         if (method) {
             const { parameters, genericParameterTypes } = method;
