@@ -13,7 +13,7 @@
         "onCommand:stackbeauty.helloWorld",
         "onCommand:stackbeauty.showDateTime",
         "onCommand:stackbeauty.showBeautified",
-        "onCommand: stackbeauty.showBeautifiedWebView"
+        "onCommand:stackbeauty.showBeautifiedWebView"
     ],
     "main": "./out/extension.js",
     "contributes": {
