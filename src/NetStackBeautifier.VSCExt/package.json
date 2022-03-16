@@ -10,29 +10,14 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:stackbeauty.helloWorld",
-        "onCommand:stackbeauty.showDateTime",
-        "onCommand:stackbeauty.showBeautified",
-        "onCommand: stackbeauty.showBeautifiedWebView"
+        "onCommand:stackbeauty.showBeautified"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "stackbeauty.helloWorld",
-                "title": "Hello from StackBeauty"
-            },
-            {
-                "title": "Show DateTime",
-                "command": "stackbeauty.showDateTime"
-            },
-            {
                 "title": "Beautify",
                 "command": "stackbeauty.showBeautified"
-            },
-            {
-                "title": "Beautify - Webview",
-                "command": "stackbeauty.showBeautifiedWebView"
             }
         ],
         "languages": [
