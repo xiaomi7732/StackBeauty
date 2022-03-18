@@ -54,6 +54,21 @@ internal class NoiseFilter<T> : IFrameFilter<T>
             return true;
         }
 
+        if (rawText.Value.Trim().Equals("[Resuming Async Method]", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (rawText.Value.Trim().Equals("[External Code]", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (rawText.Value.Trim().Equals("[Async Call Stack]", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
         return false;
     }
 }
