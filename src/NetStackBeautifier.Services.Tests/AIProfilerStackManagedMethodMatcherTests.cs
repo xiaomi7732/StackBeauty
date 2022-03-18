@@ -1,3 +1,4 @@
+using System.Linq;
 using NetStackBeautifier.Core;
 using NetStackBeautifier.Services.StackBeautifiers;
 using Xunit;
@@ -15,7 +16,7 @@ public class AIProfilerStackManagedMethodMatcherTests
     [InlineData(@"SlowAllocateString", false)]
     public void ShouldMatchBasicCases(string input, bool expectMatch)
     {
-        AIProfilerStackManagedSignatureMatcher target = new AIProfilerStackManagedSignatureMatcher();
+        AIProfilerStackManagedSignatureMatcher target = new AIProfilerStackManagedSignatureMatcher(new AIProfilerStackFileInfoMatcher(Enumerable.Empty<ILineInfoMatcher>()));
         bool actual = target.TryCreate(input, string.Empty, FrameClassNameFactory.Instance, out _);
         Assert.Equal(expectMatch, actual);
     }
@@ -25,7 +26,7 @@ public class AIProfilerStackManagedMethodMatcherTests
     {
         string input = @"System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[System.__Canon].Start(!!0&)";
         string assemblyInfo = "HelloAssemblyInfo";
-        AIProfilerStackManagedSignatureMatcher target = new AIProfilerStackManagedSignatureMatcher();
+        AIProfilerStackManagedSignatureMatcher target = new AIProfilerStackManagedSignatureMatcher(new AIProfilerStackFileInfoMatcher(Enumerable.Empty<ILineInfoMatcher>()));
         bool actual = target.TryCreate(input, assemblyInfo, FrameClassNameFactory.Instance, out FrameItem? output);
         Assert.True(actual);
         Assert.NotNull(output);
