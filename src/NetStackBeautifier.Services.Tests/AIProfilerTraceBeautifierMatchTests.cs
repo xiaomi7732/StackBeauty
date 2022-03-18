@@ -20,6 +20,7 @@ public class AIProfilerTraceBeautifierMatchTests
             Enumerable.Empty<ILineBeautifier<AIProfilerStackBeautifier>>(),
             Enumerable.Empty<IFrameFilter<AIProfilerStackBeautifier>>(),
             Enumerable.Empty<IPreFilter<AIProfilerStackBeautifier>>(),
+            new AIProfilerStackManagedSignatureMatcher(),
             FrameClassNameFactory.Instance);
 
         foreach (string testFilePath in Directory.EnumerateFiles(".", inputFilePattern))

@@ -14,6 +14,7 @@ namespace NetStackBeautifier.Services
             // Register fundamentals
             services.TryAddScoped<LineBreaker>();
             services.TryAddScoped<AzureProfilerStackLineCreator>();
+            services.TryAddScoped<AIProfilerStackManagedSignatureMatcher>();
             services.TryAddSingleton<FrameClassNameFactory>(p => FrameClassNameFactory.Instance);
             services.TryAddScoped<IBeautifierService, BeautifierService>();
 
