@@ -7,6 +7,7 @@ namespace NetStackBeautifier.Services.StackBeautifiers;
 internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautifier>
 {
     private readonly LineBreaker _lineBreaker;
+    private readonly AIProfilerStackManagedSignatureMatcher _managedSignatureMatcher;
     private readonly FrameClassNameFactory _frameClassNameFactory;
 
     // AI Profiler stack beautifier
@@ -30,25 +31,17 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
     private const string SingleStringExp = @"^[\w]+$";
     private static readonly Regex _singleStringMatcher = new Regex(SingleStringExp, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
-
-    // Matches managed class/method signature
-    // For example:
-    // DiagService.Controllers.MemoryController.StringSubstring(int32)
-    // Group[1]-FullClass-DiagService.Controllers.MemoryController
-    // Group[2]-Method-StringSubstring
-    // Group[3]-Parameter list.
-    private const string ManagedSignatureMatcher = @"^(.*)\.(.*)?\((.*)\)$";
-    private static readonly Regex _managedSigMatcher = new Regex(ManagedSignatureMatcher, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
-
     public AIProfilerStackBeautifier(
         LineBreaker lineBreaker,
         IEnumerable<ILineBeautifier<AIProfilerStackBeautifier>> lineBeautifiers,
         IEnumerable<IFrameFilter<AIProfilerStackBeautifier>> filters,
         IEnumerable<IPreFilter<AIProfilerStackBeautifier>> preFilters,
+        AIProfilerStackManagedSignatureMatcher managedSignatureMatcher,
         FrameClassNameFactory frameClassNameFactory)
         : base(lineBreaker, lineBeautifiers, filters, preFilters)
     {
         _lineBreaker = lineBreaker ?? throw new ArgumentNullException(nameof(lineBreaker));
+        _managedSignatureMatcher = managedSignatureMatcher ?? throw new ArgumentNullException(nameof(managedSignatureMatcher));
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));
     }
 
@@ -119,31 +112,9 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
         }
 
         // Managed
-        Match managedSigMatch = _managedSigMatcher.Match(rest);
-        if (managedSigMatch.Success)
+        if (_managedSignatureMatcher.TryCreate(rest, assemblyInfo, _frameClassNameFactory, out FrameItem? managedLine))
         {
-            string parameterList = managedSigMatch.Groups[3].Value;
-            string[] tokens = parameterList.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            List<FrameParameter> methodParameters = new List<FrameParameter>();
-            foreach (string parameterDescriptor in tokens)
-            {
-                string? parameterType = parameterDescriptor.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-                if (!string.IsNullOrEmpty(parameterType))
-                {
-                    methodParameters.Add(new FrameParameter(parameterType.Trim(), string.Empty));
-                }
-            }
-
-            return new FrameItem()
-            {
-                FullClass = _frameClassNameFactory.FromString(managedSigMatch.Groups[1].Value),
-                Method = new FrameMethod()
-                {
-                    Name = managedSigMatch.Groups[2].Value,
-                    Parameters = methodParameters,
-                },
-                AssemblySignature = assemblyInfo,
-            };
+            return managedLine!;
         }
 
         // Fallback

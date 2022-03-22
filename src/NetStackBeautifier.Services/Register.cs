@@ -13,9 +13,18 @@ namespace NetStackBeautifier.Services
         {
             // Register fundamentals
             services.TryAddScoped<LineBreaker>();
-            services.TryAddScoped<AzureProfilerStackLineCreator>();
-            services.TryAddSingleton<FrameClassNameFactory>(p => FrameClassNameFactory.Instance);
             services.TryAddScoped<IBeautifierService, BeautifierService>();
+
+            // Register parser dependencies
+            services.TryAddScoped<AzureProfilerStackLineCreator>();
+            services.TryAddScoped<AIProfilerStackManagedSignatureMatcher>();
+            services.TryAddSingleton<FrameClassNameFactory>(p => FrameClassNameFactory.Instance);
+
+            services.TryAddScoped<AIProfilerStackFileInfoMatcher>();
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<ILineInfoMatcher, PlainExceptionLineInfoMatcher>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<ILineInfoMatcher, PathColonLineNumberMatcher>());
+            services.TryAddEnumerable(ServiceDescriptor.Scoped<ILineInfoMatcher, LineNumberLangMatcher>());
+
 
             // Register Parsers
             services.TryAddEnumerable(ServiceDescriptor.Scoped<IBeautifier, AIProfilerStackBeautifier>());
