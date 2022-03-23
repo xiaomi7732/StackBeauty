@@ -59,7 +59,7 @@ internal class NoiseFilter<T> : IFrameFilter<T>
             return true;
         }
 
-        if (rawText.Value.Trim().Equals("[External Code]", StringComparison.OrdinalIgnoreCase))
+        if (rawText.Value.Trim().StartsWith("[External Code]", StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }
