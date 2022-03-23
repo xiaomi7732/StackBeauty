@@ -20,7 +20,7 @@ internal class DerivedClassBeautifier<T> : LineBeautifierBase<T>
 
     public DerivedClassBeautifier(
         FrameClassNameFactory frameClassNameFactory,
-        ILogger<LineBeautifierBase<T>> logger) : base(logger)
+        ILogger<DerivedClassBeautifier<T>> logger) : base(logger)
     {
         _frameClassNameFactory = frameClassNameFactory ?? throw new ArgumentNullException(nameof(frameClassNameFactory));
     }
