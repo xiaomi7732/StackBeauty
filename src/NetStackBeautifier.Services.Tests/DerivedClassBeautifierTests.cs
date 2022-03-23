@@ -17,7 +17,7 @@ public class DerivedClassBeautifierTests
     {
         string input = @"NetStackBeautifier.Services.dll!NetStackBeautifier.Services.BeautifierBase<Services.StackBeautifiers.SimpleExceptionStackBeautifier>.<BeautifyAsync>d__5.MoveNext()";
         IEnumerable expectedClassSections = new List<string>(){
-            "Services", "StackBeautifiers", "SimpleExceptionStackBeautifier(:BeautifierBase)", "<BeautifyAsync>d__5", "MoveNext()"
+            "Services", "StackBeautifiers", "(SimpleExceptionStackBeautifier)BeautifierBase", "<BeautifyAsync>d__5", "MoveNext()"
         };
 
         DerivedClassBeautifier<AIProfilerStackBeautifier> target = new DerivedClassBeautifier<AIProfilerStackBeautifier>(FrameClassNameFactory.Instance, new Mock<ILogger<DerivedClassBeautifier<AIProfilerStackBeautifier>>>().Object);

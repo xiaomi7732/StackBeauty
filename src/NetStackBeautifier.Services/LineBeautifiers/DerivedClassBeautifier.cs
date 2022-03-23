@@ -55,7 +55,7 @@ internal class DerivedClassBeautifier<T> : LineBeautifierBase<T>
         IEnumerable<string> newSections = newFullClass.NameSections;
         if (match.Groups[1].Success && !string.IsNullOrEmpty(match.Groups[1].Value))
         {
-            string last = newSections.Last() + "(:" + match.Groups[1].Value + ")";
+            string last = "(" + newSections.Last() + ")" + match.Groups[1].Value;
             newSections = newSections.SkipLast(1).Append(last);
         }
 
