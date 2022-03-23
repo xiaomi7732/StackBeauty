@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
 namespace NetStackBeautifier.Core;
@@ -42,35 +43,9 @@ public sealed class FrameClassNameFactory
         };
     }
 
-    /// <summary>
-    /// A factory method to create namespace from string, and a list of generic types
-    /// </summary>
-    /// <param name="namespaceString"></param>
-    /// <returns></returns>
-    public FrameFullClass FromString(string namespaceString, params string[] genericTypes)
-    {
-        string[] namespaceTokens = namespaceString.Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-        return new FrameFullClass()
-        {
-            NameSections = namespaceTokens,
-            GenericParameterTypes = genericTypes,
-        };
-    }
-
     private IEnumerable<string> GetSectionNames(MatchCollection matches)
     {
-        foreach (Match match in matches)
-        {
-            foreach (Group group in match.Groups)
-            {
-                if (!string.IsNullOrEmpty(group.Value) &&
-                    (string.Equals(group.Name, "n", StringComparison.OrdinalIgnoreCase) || string.Equals(group.Name, "ng", StringComparison.OrdinalIgnoreCase)))
-                {
-                    yield return group.Value;
-                }
-            }
-        }
+        return ReassembleInheritedClass(BreakDown(matches).ToArray());
     }
 
     private IEnumerable<string> GetGenericParameterTypes(Match? match)
@@ -89,6 +64,88 @@ public sealed class FrameClassNameFactory
                     yield return item;
                 }
             }
+        }
+    }
+
+    private IEnumerable<string> BreakDown(MatchCollection matches)
+    {
+        foreach (Match match in matches)
+        {
+            foreach (Group group in match.Groups)
+            {
+                if (!string.IsNullOrEmpty(group.Value) &&
+                    (string.Equals(group.Name, "n", StringComparison.OrdinalIgnoreCase) || string.Equals(group.Name, "ng", StringComparison.OrdinalIgnoreCase)))
+                {
+                    yield return group.Value;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// This is a patch implementation when the generic forms is broken by . spliter. For example: 
+    /// NetStackBeautifier.Services.BeautifierBase<NetStackBeautifier.Services.StackBeautifiers.SimpleExceptionStackBeautifier>.BeautifyAsync() will be broken down to:
+    /// NetStackBeautifier, Services, BeautifierBase<NetStackBeautifier, Services, StackBeautifiers, SimpleExceptionStackBeautifier>, ...
+    /// Notice that the portion by <> has been broken down unintentionally. This patch method merges it back.
+    /// This is not ideal, but at least make it a bit easier for reading or post processing.
+    /// </summary>
+    internal static IEnumerable<string> ReassembleInheritedClass(string[] tokens)
+    {
+
+        int total = tokens.Length;
+        int start = total;
+        int end = 0;
+        int hit = 0;
+        bool everHit = false;
+        bool fullMatch = false;
+        for (int i = 0; i < total; i++)
+        {
+            if (tokens[i].Contains('<'))
+            {
+                hit++;
+                everHit = true;
+                start = i;
+            }
+
+            if (tokens[i].Contains('>') && everHit)
+            {
+                hit--;
+
+                if (hit == 0)
+                {
+                    end = i;
+                    fullMatch = true;
+                    break;
+                }
+            }
+        }
+
+        // Invalid match
+        if(!fullMatch)
+        {
+            foreach(string token in tokens)
+            {
+                yield return token;
+            }
+            yield break;
+        }
+
+        // Valid match
+        for (int i = 0; i < start; i++)
+        {
+            yield return tokens[i];
+        }
+        //Valid match but never hit ... this shouldn't happen.
+        if (!everHit)
+        {
+            yield break;
+        }
+        
+        yield return string.Join('.', tokens, startIndex: start, count: end - start + 1);
+
+        for (int i = end + 1; i < total; i++)
+        {
+            yield return tokens[i];
         }
     }
 }
