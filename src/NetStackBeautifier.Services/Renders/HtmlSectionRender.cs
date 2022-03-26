@@ -107,8 +107,8 @@ public class HtmlSectionRender : IRender<string>
             throw new ArgumentException("FrameItem.Method is required.");
         }
 
-        return $@"<div class='frame-line-container'>
-<span{GenerateAttributes("frame-class-name", renderOptions.PreStyled)} title='{HttpUtility.HtmlEncode(frameItem.FullClass?.FullClassNameOrDefault + frameItem.AssemblySignature)} || Tracking Id:{HttpUtility.HtmlEncode(frameItem.Id)}'>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes, renderOptions.PreStyled)}.<span{GenerateAttributes("frame-method-name", renderOptions.PreStyled)}>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method, renderOptions.PreStyled)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly(), renderOptions.PreStyled)}{RenderBodyHolder()}
+        return $@"<div class='frame-line-container' ${RenderTitleForClass(frameItem)}>
+<span{GenerateAttributes("frame-class-name", renderOptions.PreStyled)}>{HttpUtility.HtmlEncode(frameItem.FullClass?.ShortClassNameOrDefault ?? frameItem.AssemblySignature)}</span>{RenderClassGenericTypes(frameItem.FullClass?.GenericParameterTypes, renderOptions.PreStyled)}.<span{GenerateAttributes("frame-method-name", renderOptions.PreStyled)}>{HttpUtility.HtmlEncode(frameItem.Method.Name)}</span>{RenderGenericMethodTypes(frameItem.Method, renderOptions.PreStyled)}{RenderParameterList(frameItem.Method.Parameters.NullAsEmpty().ToList().AsReadOnly(), renderOptions.PreStyled)}{RenderBodyHolder()}
 {Render(frameItem.FileInfo, renderOptions.PreStyled)}
 </div>";
     }
@@ -134,6 +134,15 @@ public class HtmlSectionRender : IRender<string>
         }
 
         return attributeString;
+    }
+
+    private string RenderTitleForClass(FrameItem frameItem)
+    {
+        string? titleContent;
+        _ = frameItem.Tags.TryGetValue(KnownTagKey.FullLine, out titleContent);
+        titleContent ??= string.Empty;
+        titleContent += " || Tracking Id: " + frameItem.Id;
+        return $" title='{HttpUtility.HtmlEncode(titleContent)}' ";
     }
 
     private string RenderGenericMethodTypes(FrameMethod method, bool isDefault)

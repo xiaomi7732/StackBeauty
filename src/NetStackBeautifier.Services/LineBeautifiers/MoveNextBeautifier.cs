@@ -18,6 +18,11 @@ internal class MoveNextBeautifier<T> : LineBeautifierBase<T>
     private const string StateMachineMethodMatherExp = @"^(.*)\+<(.*?)>d[_]*[\d]*(?:`([\d])+)*$";
     private static readonly Regex _stateMachineMethodMatcher = new Regex(StateMachineMethodMatherExp, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
+    // For example: <BeautifyAsync>d__5
+    // Group [1]: Method Name: 
+    private const string StateMachineMethodMatherExp2 = @"^<(.*)>d__[\d]*$";
+    private static readonly Regex _stateMachineMethodMatcher2 = new Regex(StateMachineMethodMatherExp2, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
     // Match DisplayClass tag in class
     // For example: CentralStorageAuthority+<>c__DisplayClass2_1
     // Group[1]-ClassName-CentralStorageAuthority
@@ -67,6 +72,25 @@ internal class MoveNextBeautifier<T> : LineBeautifierBase<T>
                     },
                 };
 
+                return Task.FromResult(line);
+            }
+
+            match = _stateMachineMethodMatcher2.Match(line.FullClass.ShortClassNameOrDefault);
+            if (match.Success)
+            {
+                string newMethodName = match.Groups[1].Value;
+
+                return Task.FromResult(line with
+                {
+                    FullClass = line.FullClass with
+                    {
+                        NameSections = line.FullClass.NameSections.SkipLast(1),
+                    },
+                    Method = line.Method with
+                    {
+                        Name = newMethodName,
+                    }
+                });
             }
         }
         return Task.FromResult(line);
