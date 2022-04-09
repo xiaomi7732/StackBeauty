@@ -105,6 +105,7 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
                 Name = methodName,
                 Parameters = ParseParameters(mainPartsMatch.Groups[6].Value),
                 GenericParameterTypes = methodTypeParameters,
+                RawGenericParameterTypes = methodTypeParameters
             },
             FileInfo = frameFileInfo,
             AssemblySignature = assemblyInfo,
@@ -132,7 +133,7 @@ internal class SimpleExceptionStackBeautifier : BeautifierBase<SimpleExceptionSt
             {
                 throw new InvalidCastException($"Unexpected parameter pair: {pair}, input string: {input}");
             }
-            yield return new FrameParameter(typeAndNameTokens[0], typeAndNameTokens[1]);
+            yield return new FrameParameter(typeAndNameTokens[0], typeAndNameTokens[1], typeAndNameTokens[0], typeAndNameTokens[1]);
         }
     }
 

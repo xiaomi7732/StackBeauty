@@ -26,8 +26,10 @@ internal class ClassGenericTypeSystemCanonicalBeautifier<T> : LineBeautifierBase
         int tCount = 0;
 
         List<string> result = new List<string>();
+        List<string> rawResult = new List<string>();
         foreach (string item in line.FullClass.GenericParameterTypes)
         {
+            rawResult.Add(item);
             if (string.Equals(item, "System.__Canon", StringComparison.OrdinalIgnoreCase))
             {
                 result.Add(GetT(++tCount));
@@ -43,6 +45,7 @@ internal class ClassGenericTypeSystemCanonicalBeautifier<T> : LineBeautifierBase
             FullClass = line.FullClass with
             {
                 GenericParameterTypes = result,
+                RawGenericParameterTypes = rawResult
             },
         };
 

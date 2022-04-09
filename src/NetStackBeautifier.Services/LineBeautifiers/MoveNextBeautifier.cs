@@ -64,6 +64,7 @@ internal class MoveNextBeautifier<T> : LineBeautifierBase<T>
                     {
                         Name = newMethodName,
                         GenericParameterTypes = line.Method.GenericParameterTypes.NullAsEmpty().Any() ? line.Method.GenericParameterTypes : GenerateTypeParameter(genericMethodCount),
+                        RawGenericParameterTypes = line.Method.GenericParameterTypes
                     },
                 };
 

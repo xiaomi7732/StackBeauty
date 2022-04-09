@@ -130,7 +130,7 @@ internal class AIProfilerStackBeautifier : BeautifierBase<AIProfilerStackBeautif
                 string? parameterType = parameterDescriptor.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
                 if (!string.IsNullOrEmpty(parameterType))
                 {
-                    methodParameters.Add(new FrameParameter(parameterType.Trim(), string.Empty));
+                    methodParameters.Add(new FrameParameter(parameterType.Trim(), string.Empty, parameterType, String.Empty));
                 }
             }
 

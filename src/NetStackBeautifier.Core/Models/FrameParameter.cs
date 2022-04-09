@@ -3,5 +3,5 @@ namespace NetStackBeautifier.Core
     /// <summary>
     /// A parameter.
     /// </summary>
-    public record FrameParameter(string ParameterType, string ParameterName);
+    public record FrameParameter(string ParameterType, string ParameterName, string RawParameterType, string FullParameterName);
 }

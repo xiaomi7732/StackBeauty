@@ -29,7 +29,7 @@ internal class Int32ParameterFiller<T> : LineBeautifierBase<T>
                 {
                     paramName = "n" + order++;
                 }
-                newParamList.Add(new FrameParameter("int", paramName));
+                newParamList.Add(new FrameParameter("int", paramName, parameter.ParameterType, parameter.ParameterName));
                 continue;
             }
 

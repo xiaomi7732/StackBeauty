@@ -8,28 +8,34 @@ import {
 interface IStackTreeParams {
     parameterName: string;
     parameterType: string;
+    rawParameterType: string;
+    fullParameterName: string;
 }
-interface IStackTreeTypeValue {
+export interface IStackTreeMethod {
+    name: string;
+    parameters: IStackTreeParams[];
+    genericParameterTypes: string[];
+    rawGenericParameterTypes: string[];
+}
+export interface IStackTreeFullClass {
+    nameSections: string[];
+    genericParameterTypes: string[];
+    rawGenericParameterTypes: string[];
+    fullClassNameOrDefault: string;
+    shortClassNameOrDefault: string;
+}
+export interface IStackTreeTypeValue {
     value?: string;
     assemblySignature: string;
     fileInfo: string;
-    fullClass?: {
-        nameSections: string[];
-        genericParameterTypes: string[];
-        fullClassNameOrDefault: string;
-        shortClassNameOrDefault: string;
-    };
+    fullClass?: IStackTreeFullClass;
     id: string;
-    method: {
-        name: string;
-        parameters: IStackTreeParams[];
-        genericParameterTypes: string[];
-    };
+    method: IStackTreeMethod;
     tags: any;
 }
 export interface IStackTree {
     typeDiscriminator: number;
-    typeValue: IStackTreeTypeValue; 
+    typeValue: IStackTreeTypeValue;
 }
 
 export class StackDocumentProvider implements TextDocumentContentProvider {
