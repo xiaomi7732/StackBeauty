@@ -11,11 +11,16 @@ import {
 import { IStackTree } from "./StackDocumentProvider";
 import * as SemanticFilters from './SemanticFilters';
 
+export interface IDocumentLineRemovals {
+  removedAtIndex: number;
+  removedLength: number;
+}
+
 export interface IDocumentLine {
   fullLine: string;
   lineNumber: number;
   remainingLine: string;
-  currentIndex: number;
+  removals: IDocumentLineRemovals[];
 }
 
 export enum StackType {
@@ -89,7 +94,7 @@ export const generateColorizer = (json: IStackTree[], fileUri: string, stackType
           fullLine: line,
           lineNumber: i,
           remainingLine: line,
-          currentIndex: 0
+          removals: []
         };
 
         semanticStackBuilder(docLine, json, stackType, tokensBuilder);
