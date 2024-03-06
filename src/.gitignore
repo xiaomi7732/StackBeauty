@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 
 ## published.
 app/*
+
+## Solutions
+*.sln
