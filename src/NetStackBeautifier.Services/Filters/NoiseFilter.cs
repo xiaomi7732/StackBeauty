@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using NetStackBeautifier.Core;
 
 namespace NetStackBeautifier.Services.Filters;
@@ -22,6 +23,8 @@ internal class NoiseFilter<T> : IFrameFilter<T>
 
     private bool IsNoise(FrameItem frameItem)
     {
+        // Make a noisy check prvoiders collection from this
+
         if (frameItem is null)
         {
             return false;
@@ -34,7 +37,49 @@ internal class NoiseFilter<T> : IFrameFilter<T>
         }
 
         if (string.Equals(frameItem.FullClass?.FullClassNameOrDefault, "System.Runtime.ExceptionServices.ExceptionDispatchInfo", StringComparison.OrdinalIgnoreCase) &&
-            string.Equals(frameItem.Method?.Name, "Throw"))
+            string.Equals(frameItem.Method?.Name, "Throw", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(frameItem.FullClass?.FullClassNameOrDefault, "System.Private.CoreLib.System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(frameItem.FullClass?.FullClassNameOrDefault, "System.Private.CoreLib.System.Threading.ExecutionContext", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (!string.IsNullOrEmpty(frameItem.FullClass?.FullClassNameOrDefault) && frameItem.FullClass.FullClassNameOrDefault.StartsWith("System.Private.CoreLib.System.Threading.Tasks.Task", StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(frameItem.Method?.Name, "TrySetResult", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(frameItem.FullClass?.FullClassNameOrDefault, "System.Private.CoreLib.System.Threading.Tasks.Task", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(frameItem.Method?.Name, "RunContinuations"))
+        {
+            return true;
+        }
+
+        if(string.Equals(frameItem.FullClass?.FullClassNameOrDefault, "System.Private.CoreLib.System.Threading.Tasks.AwaitTaskContinuation", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if(!string.IsNullOrEmpty(frameItem.FullClass?.FullClassNameOrDefault) && frameItem.FullClass.FullClassNameOrDefault.StartsWith("System.Private.CoreLib.System.Runtime.CompilerServices.TaskAwaiter", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if(!string.IsNullOrEmpty(frameItem.FullClass?.FullClassNameOrDefault) && frameItem.FullClass.FullClassNameOrDefault.StartsWith("System.Private.CoreLib.System.Runtime.CompilerServices.AsyncTaskMethodBuilder", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if(!string.IsNullOrEmpty(frameItem.FullClass?.FullClassNameOrDefault) && frameItem.FullClass.FullClassNameOrDefault.StartsWith("Microsoft.AspNetCore.Mvc.Core.Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor", StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }

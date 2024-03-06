@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C35CB0E2-4067-4DB6-9F5D-3FD3850EC442}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStackBeautifier.Core", "src\NetStackBeautifier.Core\NetStackBeautifier.Core.csproj", "{77D7E1A5-59E0-4633-8B0C-C02936578A5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStackBeautifier.Services", "src\NetStackBeautifier.Services\NetStackBeautifier.Services.csproj", "{1404BA98-CB56-4A32-8D43-63C616D93AEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStackBeautifier.Services.Tests", "src\NetStackBeautifier.Services.Tests\NetStackBeautifier.Services.Tests.csproj", "{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStackBeautifier.WebAPI", "src\NetStackBeautifier.WebAPI\NetStackBeautifier.WebAPI.csproj", "{AE814C17-6AC2-4047-B3A3-4C1716916DCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77D7E1A5-59E0-4633-8B0C-C02936578A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D7E1A5-59E0-4633-8B0C-C02936578A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D7E1A5-59E0-4633-8B0C-C02936578A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D7E1A5-59E0-4633-8B0C-C02936578A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1404BA98-CB56-4A32-8D43-63C616D93AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1404BA98-CB56-4A32-8D43-63C616D93AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1404BA98-CB56-4A32-8D43-63C616D93AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1404BA98-CB56-4A32-8D43-63C616D93AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE814C17-6AC2-4047-B3A3-4C1716916DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE814C17-6AC2-4047-B3A3-4C1716916DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE814C17-6AC2-4047-B3A3-4C1716916DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE814C17-6AC2-4047-B3A3-4C1716916DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77D7E1A5-59E0-4633-8B0C-C02936578A5B} = {C35CB0E2-4067-4DB6-9F5D-3FD3850EC442}
+		{1404BA98-CB56-4A32-8D43-63C616D93AEF} = {C35CB0E2-4067-4DB6-9F5D-3FD3850EC442}
+		{DEFCA5F8-E0CA-4AA3-BA89-896E3EC8CE5B} = {C35CB0E2-4067-4DB6-9F5D-3FD3850EC442}
+		{AE814C17-6AC2-4047-B3A3-4C1716916DCD} = {C35CB0E2-4067-4DB6-9F5D-3FD3850EC442}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7984533-E0FC-48E8-A4F7-1FD81F820E40}
+	EndGlobalSection
+EndGlobal
