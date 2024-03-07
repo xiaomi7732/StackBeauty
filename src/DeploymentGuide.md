@@ -56,7 +56,7 @@ $RELEASE_VERSION="" # Fill in the value!
 This repeats the steps above. Just putting together for easy copy/execution. Remember to update the release version!
 
 ```shell
-$RELEASE_VERSION="20220310.03"
+$RELEASE_VERSION="20240306.02"
 $APP_NAME="stackbeauty"
 $LOCATION="eastus2"
 $ENVIRONMENT="dev"
@@ -75,7 +75,7 @@ docker push $REPO_IMAGE_TAG
 az containerapp update -n $CONTAINER_APP_NAME `
     -g $RESOURCE_GROUP `
     --image "$REPO_IMAGE_TAG" `
-    --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
+    --set-env-vars "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
 ```
 
 ## New deployment
