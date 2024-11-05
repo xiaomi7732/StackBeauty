@@ -8,7 +8,7 @@
 $RELEASE_VERSION="" # Fill in the value!
 ```
 
-  * RG related
+* RG related
 
   ```shell
   $APP_NAME="stackbeauty"
@@ -17,7 +17,7 @@ $RELEASE_VERSION="" # Fill in the value!
   $RESOURCE_GROUP="$APP_NAME-$LOCATION-$ENVIRONMENT"
   ```
 
-  * Container App
+* Container App
 
   ```shell
   $LOCAL_IMAGE_TAG="$APP_NAME"
@@ -26,7 +26,7 @@ $RELEASE_VERSION="" # Fill in the value!
   $CONTAINER_APP_NAME="$APP_NAME-$ENVIRONMENT"
   ```
 
-  * Logging
+* Logging
 
   ```shell
   $LOG_ANALYTICS_WORKSPACE="stackbeauty-$LOCATION-logs"
@@ -36,6 +36,7 @@ $RELEASE_VERSION="" # Fill in the value!
 * Run deployment steps, in powershell enabled shell:
 
   * Build the image
+
   ```shell
   dotnet clean -c Release -o .\app\ .\NetStackBeautifier.WebAPI\
   dotnet publish -c Release -o .\app\ .\NetStackBeautifier.WebAPI\
@@ -45,18 +46,20 @@ $RELEASE_VERSION="" # Fill in the value!
   ```
 
   * Revision the app
+
   ```shell
   az containerapp update -n $CONTAINER_APP_NAME `
     -g $RESOURCE_GROUP `
     --image "$REPO_IMAGE_TAG" `
     --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
   ```
+
 ## Shorthands for quick deployment
 
 This repeats the steps above. Just putting together for easy copy/execution. Remember to update the release version!
 
 ```shell
-$RELEASE_VERSION="20240306.02"
+$RELEASE_VERSION="20241104.01"
 $APP_NAME="stackbeauty"
 $LOCATION="eastus2"
 $ENVIRONMENT="dev"
