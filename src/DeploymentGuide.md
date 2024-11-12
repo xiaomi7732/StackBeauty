@@ -5,6 +5,7 @@
 * Setup Context
 
 ```shell
+# Last time used: 20241122.01
 $RELEASE_VERSION="" # Fill in the value!
 ```
 
@@ -51,7 +52,7 @@ $RELEASE_VERSION="" # Fill in the value!
   az containerapp update -n $CONTAINER_APP_NAME `
     -g $RESOURCE_GROUP `
     --image "$REPO_IMAGE_TAG" `
-    --environment-variables "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
+    --set-env-vars "ApplicationInsights__ConnectionString=secretref:insights-connection-string"
   ```
 
 ## Shorthands for quick deployment
